@@ -1,6 +1,7 @@
 package io.usoamic.webwallet
 
 import js.externals.jquery.JQuery
+import js.externals.jquery.JQueryCallback
 import js.externals.jquery.jQuery
 import org.w3c.dom.HTMLElement
 
@@ -16,22 +17,32 @@ val dashboardView = jQuery("#dashboard_view")
 var currentView = firstView
 
 /*
- * FirstPage
+ * Common Authorization
  */
-val addButton = jQuery("#add_button")
-val createButton = jQuery("#create_button")
+val toFirstBtn = jQuery(".to_first")
 
 /*
- * AddWalletPage
+ * FirstView
  */
+val addBtn = jQuery("#add_button")
+val createBtn = jQuery("#create_button")
+
+/*
+ * AddWalletView
+ */
+val saveBtn = jQuery("#save_button")
+val addPrivateKeyInput = jQuery("#add_pk_input")
+val addPasswordInput = jQuery("#add_password_input")
+val addConfirmInput = jQuery("#add_confirm_password_input")
+val newPrivateKeyElement = jQuery("#new_pk_element")
 
 
 /*
- * CreateWalletPage
+ * CreateWalletView
  */
 
 /*
- * DashboardPage
+ * DashboardView
  */
 fun main() {
     loader.delay(1500).fadeOut()
@@ -39,14 +50,25 @@ fun main() {
 }
 
 private fun setListeners() {
-    addButton.on("click") {
-        println("onClick: addButton")
+    addBtn.onClick {
         addWalletView.showIt()
     }
 
-    createButton.on("click") {
+    createBtn.onClick {
         createWalletView.showIt()
     }
+
+    toFirstBtn.onClick {
+        firstView.showIt()
+    }
+
+    saveBtn.onClick {
+
+    }
+}
+
+fun JQuery<HTMLElement>.onClick(callback: () -> Unit) {
+    this.on("click", callback)
 }
 
 fun JQuery<HTMLElement>.showIt() {
