@@ -29,8 +29,8 @@ repositories {
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-js"
-    implementation name: 'web3kt-1.0.1', ext: 'jar'
-    implementation name: 'usoamickotlinjs-1.0.0', ext: 'jar'
+    implementation name: 'web3kt-1.0.0', ext: 'jar'
+    implementation name: 'usoamickotlinjs-1.0.1', ext: 'jar'
     testImplementation "org.jetbrains.kotlin:kotlin-test-js"
 }
 
