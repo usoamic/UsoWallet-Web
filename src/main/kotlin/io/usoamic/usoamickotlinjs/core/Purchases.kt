@@ -12,8 +12,8 @@ interface Purchases {
     fun getPurchaseByAddress(address: String, id: String): CallResponse<Purchase>
 
     @JsName("getLastPurchaseId")
-    fun getLastPurchaseId(address: String): String
+    fun getLastPurchaseId(address: String): CallResponse<String>
 
     @JsName("getNumberOfPurchasesByAddress")
-    fun getNumberOfPurchasesByAddress(address: String): String
+    fun getNumberOfPurchasesByAddress(address: String): CallResponse<String>
 }

@@ -17,11 +17,11 @@ interface Swap {
     fun setSwappable(swappable: Boolean): ExecuteResponse
 
     @JsName("getSwapBalance")
-    fun getSwapBalance(): String
+    fun getSwapBalance(): CallResponse<String>
 
     @JsName("getSwapRate")
-    fun getSwapRate(): String
+    fun getSwapRate(): CallResponse<String>
 
     @JsName("getSwappable")
-    fun getSwappable(): Boolean
+    fun getSwappable(): CallResponse<Boolean>
 }
