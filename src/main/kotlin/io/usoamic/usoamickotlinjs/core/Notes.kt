@@ -4,7 +4,7 @@ import io.usoamic.usoamickotlinjs.model.Note
 import io.usoamic.web3kt.core.contract.response.CallResponse
 import io.usoamic.web3kt.core.contract.response.ExecuteResponse
 
-interface Notes {
+interface Notes : Ideas {
     @JsName("addPublicNote")
     fun addPublicNote(content: String): ExecuteResponse
 

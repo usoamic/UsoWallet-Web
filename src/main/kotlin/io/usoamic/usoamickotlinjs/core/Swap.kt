@@ -3,7 +3,7 @@ package io.usoamic.usoamickotlinjs.core
 import io.usoamic.web3kt.core.contract.response.CallResponse
 import io.usoamic.web3kt.core.contract.response.ExecuteResponse
 
-interface Swap {
+interface Swap : TransactionExplorer {
     @JsName("withdrawEth")
     fun withdrawEth(value: String): ExecuteResponse
 

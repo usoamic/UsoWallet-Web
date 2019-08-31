@@ -1,11 +1,12 @@
 package io.usoamic.usoamickotlinjs.core
 
+import io.usoamic.web3kt.bignumber.BigNumber
 import io.usoamic.web3kt.core.contract.response.CallResponse
 import io.usoamic.web3kt.core.contract.response.ExecuteResponse
 
-interface Usoamic {
+interface Usoamic : Swap {
     @JsName("balanceOf")
-    fun balanceOf(address: String): CallResponse<String>
+    fun balanceOf(address: String): CallResponse<BigNumber>
 
     @JsName("burn")
     fun burn(value: String): ExecuteResponse

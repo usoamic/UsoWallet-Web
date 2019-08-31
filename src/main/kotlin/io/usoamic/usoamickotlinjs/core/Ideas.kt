@@ -6,7 +6,7 @@ import io.usoamic.usoamickotlinjs.model.Vote
 import io.usoamic.web3kt.core.contract.response.CallResponse
 import io.usoamic.web3kt.core.contract.response.ExecuteResponse
 
-interface Ideas {
+interface Ideas : Owner {
     @JsName("addIdea")
     fun addIdea(description: String): ExecuteResponse
 

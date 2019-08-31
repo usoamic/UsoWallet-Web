@@ -3,7 +3,7 @@ package io.usoamic.usoamickotlinjs.core
 import io.usoamic.usoamickotlinjs.model.Transaction
 import io.usoamic.web3kt.core.contract.response.CallResponse
 
-interface TransactionExplorer {
+interface TransactionExplorer : Purchases {
     @JsName("getTransaction")
     fun getTransaction(txId: String): CallResponse<Transaction>
 

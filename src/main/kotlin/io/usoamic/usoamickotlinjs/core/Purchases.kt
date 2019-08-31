@@ -4,7 +4,7 @@ import io.usoamic.usoamickotlinjs.model.Purchase
 import io.usoamic.web3kt.core.contract.response.CallResponse
 import io.usoamic.web3kt.core.contract.response.ExecuteResponse
 
-interface Purchases {
+interface Purchases : Notes {
     @JsName("makePurchase")
     fun makePurchase(appId: String, purchaseId: String, cost: String): ExecuteResponse
 
