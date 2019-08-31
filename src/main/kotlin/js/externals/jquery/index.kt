@@ -699,6 +699,7 @@ external interface JQuery<TElement : Node> : Iterable<TElement> {
     fun <TData> on(events: String, data: TData, handler: EventHandler<TElement, TData>): JQuery<TElement> /* this */
     fun <TData> on(events: String, data: TData, handler: EventHandlerBase<Any, Event<TElement, TData>>): JQuery<TElement> /* this */
     fun on(events: String, handler: Boolean): JQuery<TElement> /* this */
+    fun on(events: String, callback: () -> Unit): JQuery<TElement> /* this */
     fun on(events: String, handler: EventHandler<TElement, Nothing?>): JQuery<TElement> /* this */
     fun on(events: String, handler: EventHandlerBase<Any, Event<TElement, Nothing?>>): JQuery<TElement> /* this */
     fun on(events: String, handler: Nothing?): JQuery<TElement> /* this */
