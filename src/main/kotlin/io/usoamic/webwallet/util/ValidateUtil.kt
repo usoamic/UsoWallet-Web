@@ -1,10 +1,9 @@
-package io.usoamic.cli.util
+package io.usoamic.webwallet.util
 
-import io.usoamic.cli.exception.ValidateUtilException
-import org.web3j.crypto.MnemonicUtils
-import org.web3j.crypto.WalletUtils
-import java.math.BigDecimal
-import java.math.BigInteger
+import io.usoamic.web3kt.util.EthereumUtils
+import io.usoamic.webwallet.exception.ValidateUtilException
+import io.usoamic.web3kt.bignumber.BigNumber
+import io.usoamic.web3kt.bignumber.BigNumberValue
 
 class ValidateUtil {
     companion object {
@@ -26,35 +25,29 @@ class ValidateUtil {
 
         fun validatePrivateKey(privateKey: String) = apply {
             validateThatNotEmpty(privateKey, "Private Key Required")
-            if(!WalletUtils.isValidPrivateKey(privateKey)) {
-                throw ValidateUtilException("Invalid Private Key")
-            }
-        }
 
-        fun validateMnemonicPhrase(mnemonicPhrase: String) = apply {
-            validateThatNotEmpty(mnemonicPhrase, "Mnemonic Phrase Required")
-            if(!MnemonicUtils.validateMnemonic(mnemonicPhrase)) {
-                throw ValidateUtilException("Invalid Mnemonic Phrase")
+            if(!EthereumUtils.isValidPrivateKey(privateKey)) {
+                throw ValidateUtilException("Invalid Private Key")
             }
         }
 
         fun validateAddress(address: String) = apply {
             validateThatNotEmpty(address, "Address Required")
-            if(!WalletUtils.isValidAddress(address)) {
+            if(!EthereumUtils.isValidAddress(address)) {
                 throw ValidateUtilException("Invalid Address")
             }
         }
 
         fun validateTransferValue(value: String) = apply {
-            val decimalVal = value.toBigDecimalOrNull() ?: throw ValidateUtilException("Value Required")
-            if(decimalVal <= BigDecimal.ZERO) {
+            val bigNumberVal = if(value.isNotEmpty()) BigNumber(value) else throw ValidateUtilException("Value Required")
+            if(bigNumberVal.isLessThanOrEqualTo(BigNumberValue.ZERO)) {
                 throw ValidateUtilException("Invalid Value")
             }
         }
 
         fun validateId(id: String) = apply {
-            val intId = id.toBigIntegerOrNull() ?: throw ValidateUtilException("Invalid Id")
-            if(intId < BigInteger.ZERO) {
+            val intId = if(id.isNotEmpty()) BigNumber(id) else throw ValidateUtilException("Invalid Id")
+            if(intId.isLessThan(BigNumberValue.ZERO)) {
                 throw ValidateUtilException("Id must be greater than or equal to zero")
             }
         }
