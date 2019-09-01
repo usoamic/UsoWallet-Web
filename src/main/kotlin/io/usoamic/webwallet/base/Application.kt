@@ -6,4 +6,5 @@ interface Application {
     fun startLoading()
     fun stopLoading()
     fun open(view: View)
+    fun onException(t: Throwable)
 }
