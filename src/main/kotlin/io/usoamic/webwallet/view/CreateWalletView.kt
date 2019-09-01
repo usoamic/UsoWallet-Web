@@ -16,6 +16,7 @@ class CreateWalletView(application: Application) : View(application) {
     private val addressElement = jQuery("#new_address_element")
 
     init {
+        application.hideNavigationBar()
         preparePrivateKey()
         setListeners()
     }

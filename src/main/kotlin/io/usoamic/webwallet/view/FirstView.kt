@@ -11,11 +11,11 @@ class FirstView(application: Application) : View(application) {
     private val createBtn = jQuery("#create_button")
 
     init {
+        application.hideNavigationBar()
         setListeners()
-        stopLoading()
     }
 
-    fun setListeners() {
+    private fun setListeners() {
         addBtn.onClick {
            AddWalletView.newInstance(application)
         }

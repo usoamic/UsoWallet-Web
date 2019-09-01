@@ -2,11 +2,15 @@ package io.usoamic.webwallet
 
 import io.usoamic.webwallet.base.Application
 import io.usoamic.webwallet.base.View
+import io.usoamic.webwallet.view.DashboardView
 import io.usoamic.webwallet.view.FirstView
+import js.externals.jquery.JQuery
 import js.externals.jquery.extension.onClick
 import js.externals.jquery.jQuery
+import org.w3c.dom.HTMLElement
 
 class App : Application {
+    private val baseElement: JQuery<HTMLElement> = jQuery("#html")
     override lateinit var currentView: View
     private val toFirstBtn = jQuery(".to_first")
     private val loader = jQuery(".loader")
@@ -18,18 +22,20 @@ class App : Application {
     override fun onStart() {
         startLoading()
         FirstView.newInstance(this)
+        stopLoading()
     }
 
     override fun startLoading() { }
 
     override fun stopLoading() {
-        loader.delay(1500).fadeOut()
+        loader.delay(0).fadeOut()
     }
 
     override fun open(view: View) {
         if(::currentView.isInitialized) {
             currentView.onStop()
         }
+
         currentView = view
         currentView.onStart()
     }
@@ -44,5 +50,16 @@ class App : Application {
         }
     }
 
+    override fun showNavigationBar() {
+        if(baseElement.hasClass("login_page")) {
+            baseElement.removeClass("login_page")
+        }
+    }
+
+    override fun hideNavigationBar() {
+        if(!baseElement.hasClass("login_page")) {
+            baseElement.addClass("login_page")
+        }
+    }
 }
 

@@ -26,6 +26,7 @@ class AddWalletView(application: Application) : View(application) {
     private val saveBtn = jQuery("#save_button")
 
     init {
+        application.hideNavigationBar()
         setListeners()
     }
 

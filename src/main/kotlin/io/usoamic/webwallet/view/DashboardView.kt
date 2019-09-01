@@ -9,13 +9,16 @@ import js.externals.jquery.jQuery
 import kotlin.browser.localStorage
 
 class DashboardView(application: Application) : View(application) {
+
     override val view = jQuery("#dashboard_view")
     private val account get() =  localStorage.getItem(Config.ACCOUNT_FILENAME)?.let {
             JSON.parse<Account>(it)
     } ?: throw WalletNotFoundException()
 
     init {
-        println("address: ${account.address}")
+        application.showNavigationBar()
+//        println("address: ${account.address}")
+
     }
 
     companion object {
