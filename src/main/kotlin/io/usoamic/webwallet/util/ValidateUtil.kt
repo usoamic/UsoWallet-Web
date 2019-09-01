@@ -11,6 +11,10 @@ class ValidateUtil {
             validateThatNotEmpty(password, "Password Required")
         }
 
+        fun validateConfirmPassword(password: String) = apply {
+            validateThatNotEmpty(password, "Confirm Password Required")
+        }
+
         fun validateDescription(description: String) = apply {
             validateThatNotEmpty(description, "Description Required")
         }
