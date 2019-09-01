@@ -20,3 +20,15 @@ fun JQuery<HTMLElement>.stopLoading(disable: Boolean = false) {
         this.prop("disabled", disable)
     }
 }
+
+fun JQuery<HTMLElement>.showLoading() {
+    this.text("Loading...")
+}
+
+fun JQuery<HTMLElement>.addHidden() {
+    this.addClass("hidden")
+}
+
+fun JQuery<HTMLElement>.removeHidden() {
+    this.removeClass("hidden")
+}
