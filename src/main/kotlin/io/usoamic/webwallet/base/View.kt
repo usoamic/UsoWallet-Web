@@ -7,19 +7,19 @@ import org.w3c.dom.HTMLElement
 abstract class View(protected val application: Application) {
     abstract val view: JQuery<HTMLElement>
 
-    fun startLoading() {
+    open fun startLoading() {
         application.startLoading()
     }
 
-    fun stopLoading() {
+    open fun stopLoading() {
         application.stopLoading()
     }
 
-    fun onStart() {
+    open fun onStart() {
         view.show()
     }
 
-    fun onStop() {
+    open fun onStop() {
         view.hide()
     }
 }
