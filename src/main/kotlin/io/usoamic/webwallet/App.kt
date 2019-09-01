@@ -8,9 +8,8 @@ import js.externals.jquery.jQuery
 
 class App : Application {
     override lateinit var currentView: View
-
-    val toFirstBtn = jQuery(".to_first")
-    val loader = jQuery(".loader")
+    private val toFirstBtn = jQuery(".to_first")
+    private val loader = jQuery(".loader")
 
     init {
         setListeners()

@@ -10,7 +10,7 @@ import kotlin.browser.localStorage
 
 class DashboardView(application: Application) : View(application) {
     override val view = jQuery("#dashboard_view")
-    val account get() =  localStorage.getItem(Config.ACCOUNT_FILENAME)?.let {
+    private val account get() =  localStorage.getItem(Config.ACCOUNT_FILENAME)?.let {
             JSON.parse<Account>(it)
     } ?: throw WalletNotFoundException()
 
