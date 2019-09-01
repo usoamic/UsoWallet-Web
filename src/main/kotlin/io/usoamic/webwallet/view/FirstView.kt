@@ -7,8 +7,8 @@ import js.externals.jquery.jQuery
 
 class FirstView(application: Application) : View(application) {
     override val view = jQuery("#first_view")
-    val addBtn = jQuery("#add_button")
-    val createBtn = jQuery("#create_button")
+    private val addBtn = jQuery("#add_button")
+    private val createBtn = jQuery("#create_button")
 
     init {
         setListeners()

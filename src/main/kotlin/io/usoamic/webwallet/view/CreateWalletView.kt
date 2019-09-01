@@ -7,7 +7,7 @@ import js.externals.jquery.jQuery
 
 class CreateWalletView(application: Application) : View(application) {
     override val view = jQuery("#create_wallet_view")
-    val newPrivateKeyElement = jQuery("#new_pk_element")
+    private val newPrivateKeyElement = jQuery("#new_pk_element")
 
     companion object {
         fun newInstance(application: Application) {
