@@ -35,10 +35,15 @@ class App : Application {
         currentView.onStart()
     }
 
+    override fun onException(t: Throwable) {
+        println(t.message)
+    }
+
     private fun setListeners() {
         toFirstBtn.onClick {
             FirstView.newInstance(this)
         }
     }
+
 }
 
