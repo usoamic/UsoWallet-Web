@@ -10,7 +10,8 @@
 
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" type="text/css" href="//stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="//stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css"
+          href="//stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.16/css/dataTables.bootstrap4.min.css"/>
     <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css"/>
 
@@ -23,7 +24,27 @@
 </div>
 <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top" role="navigation">
     <div class="container">
-        <a class="navbar-brand" href="#">Dashboard</a>
+        <a class="navbar-brand" href="#">UsoWallet</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarMenu"
+                aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarMenu">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active" id="dashboard_item">
+                    <a class="nav-link" href="#dashboard">Dashboard</a>
+                </li>
+                <li class="nav-item" id="deposit_item">
+                    <a class="nav-link" href="#deposit">Deposit</a>
+                </li>
+                <li class="nav-item" id="withdraw_item">
+                    <a class="nav-link" href="#withdraw">Withdraw</a>
+                </li>
+                <li class="nav-item" id="history_item">
+                    <a class="nav-link" href="#history">History</a>
+                </li>
+            </ul>
+        </div>
         <ul class="navbar-nav ml-auto">
             <li class="nav-item">
                 <a class="nav-link" id="logout">
@@ -55,7 +76,8 @@
                         <div class="input-group-prepend">
                             <div class="input-group-text"><i class="fa fa-search"></i></div>
                         </div>
-                        <input type="text" class="form-control" id="add_pk_input" name="add_pk_input" placeholder="Private key">
+                        <input type="text" class="form-control" id="add_pk_input" name="add_pk_input"
+                               placeholder="Private key">
                     </div>
                 </div>
                 <div class="form-group">
@@ -63,7 +85,8 @@
                         <div class="input-group-prepend">
                             <div class="input-group-text"><i class="fa fa-search"></i></div>
                         </div>
-                        <input type="password" class="form-control" id="add_password_input" name="add_password_input" placeholder="Password">
+                        <input type="password" class="form-control" id="add_password_input" name="add_password_input"
+                               placeholder="Password">
                     </div>
                 </div>
                 <div class="form-group">
@@ -71,7 +94,8 @@
                         <div class="input-group-prepend">
                             <div class="input-group-text"><i class="fa fa-search"></i></div>
                         </div>
-                        <input type="password" class="form-control" id="add_confirm_password_input" name="add_confirm_password_input" placeholder="Confirm password">
+                        <input type="password" class="form-control" id="add_confirm_password_input"
+                               name="add_confirm_password_input" placeholder="Confirm password">
                     </div>
                 </div>
                 <p class="pull-right">
@@ -86,7 +110,8 @@
             <h6 class="border-bottom border-gray p-3">Create</h6>
             <div class="m-3">
                 <div class="alert alert-danger" role="alert">
-                    Please back up your private key in a reliable place! We DO NOT KEEP private keys. If you lose your private key, you won't be able to access your funds.
+                    Please back up your private key in a reliable place! We DO NOT KEEP private keys. If you lose your
+                    private key, you won't be able to access your funds.
                 </div>
                 <div class="form-group">
                     <div class="input-group">
@@ -151,42 +176,64 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-12">
+                <div class="card box-shadow my-3 height_315px">
+                    <h6 class="border-bottom border-gray p-3">Last Transfers</h6>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table id="last_transfers" class="table table-striped table-bordered" cellspacing="0"
+                                   width="100%">
+                                <thead>
+                                <tr>
+                                    <th class="d-none d-sm-table-cell">Type</th>
+                                    <th class="d-none d-sm-table-cell">Address</th>
+                                    <th class="d-none d-md-table-cell">Amount</th>
+                                    <th class="d-none d-md-table-cell">Timestamp</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td class="d-none d-sm-table-cell">TxType</td>
+                                    <td class="d-none d-md-table-cell">Address</td>
+                                    <td class="d-none d-md-table-cell">Value</td>
+                                    <td class="d-none d-md-table-cell">Timestamp</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="deposit_view" class="hidden">
+        <div class="row">
+            <div class="col-md-12">
                 <div class="card box-shadow my-3 height_315px">
                     <h6 class="border-bottom border-gray p-3">Deposit</h6>
                     <div class="card-body text-center align-items-center">
-                        <div id="deposit_input_div" class="row h-100">
-                            <div class="col-sm-12 my-auto">
-                                <div class="form-group">
-                                    <div class="input-group">
-                                        <div class="input-group-prepend">
-                                            <div class="input-group-text"><i class="fa fa-search"></i></div>
-                                        </div>
-                                        <input type="password" id="deposit_password_input" class="form-control" placeholder="Password">
-                                    </div>
-                                </div>
-                                <p class="pull-right">
-                                    <button class="btn btn-primary" id="show_deposit_button">Show</button>
-                                </p>
-                            </div>
-                        </div>
-                        <div id="deposit_info_div" class="hidden">
+                        <div id="deposit_info_div">
                             <div id="qr_address"></div>
                             <div id="text_address" class="fs-md-reduce"></div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-md-8">
+        </div>
+    </div>
+    <div id="withdraw_view" class="hidden">
+        <div class="row">
+            <div class="col-md-12">
                 <div class="card box-shadow my-3 height_315px">
-                    <h6 class="border-bottom border-gray p-3">Send</h6>
+                    <h6 class="border-bottom border-gray p-3">Withdraw</h6>
                     <div class="card-body">
                         <div class="form-group">
                             <div class="input-group">
                                 <div class="input-group-prepend">
                                     <div class="input-group-text"><i class="fa fa-search"></i></div>
                                 </div>
-                                <input type="text" id="send_address_input" class="form-control" placeholder="Address">
+                                <input type="text" id="withdraw_address_input" class="form-control"
+                                       placeholder="Address">
                             </div>
                         </div>
                         <div class="form-group">
@@ -194,7 +241,7 @@
                                 <div class="input-group-prepend">
                                     <div class="input-group-text"><i class="fa fa-search"></i></div>
                                 </div>
-                                <input type="text" id="send_amount_input" class="form-control" placeholder="Amount">
+                                <input type="text" id="withdraw_amount_input" class="form-control" placeholder="Amount">
                             </div>
                         </div>
                         <div class="form-group">
@@ -202,20 +249,54 @@
                                 <div class="input-group-prepend">
                                     <div class="input-group-text"><i class="fa fa-search"></i></div>
                                 </div>
-                                <input type="password" id="send_password_input" class="form-control" placeholder="Password">
+                                <input type="password" id="withdraw_password_input" class="form-control"
+                                       placeholder="Password">
                             </div>
                         </div>
 
                         <div class="form-group float-right">
                             <div class="dropdown">
-                                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" id="send_button">
+                                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"
+                                        id="withdraw_button">
                                     Send
                                 </button>
-                                <div id="send_dropdown_div" class="dropdown-menu dropdown-menu-right">
-                                    <div class="dropdown-item send_dropdown_item" id="eth_send">ETH</div>
-                                    <div class="dropdown-item send_dropdown_item" id="uso_send">USO</div>
+                                <div id="withdraw_dropdown_div" class="dropdown-menu dropdown-menu-right">
+                                    <div class="dropdown-item send_dropdown_item" id="eth_withdraw">ETH</div>
+                                    <div class="dropdown-item send_dropdown_item" id="uso_withdraw">USO</div>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="history_view" class="hidden">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card box-shadow my-3 height_315px">
+                    <h6 class="border-bottom border-gray p-3">History</h6>
+                    <div class="card-body text-center align-items-center">
+                        <div class="table-responsive">
+                            <table id="transfers" class="table table-striped table-bordered" cellspacing="0"
+                                   width="100%">
+                                <thead>
+                                <tr>
+                                    <th class="d-none d-sm-table-cell">Type</th>
+                                    <th class="d-none d-sm-table-cell">Address</th>
+                                    <th class="d-none d-md-table-cell">Amount</th>
+                                    <th class="d-none d-md-table-cell">Timestamp</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td class="d-none d-sm-table-cell">TxType</td>
+                                    <td class="d-none d-md-table-cell">Address</td>
+                                    <td class="d-none d-md-table-cell">Value</td>
+                                    <td class="d-none d-md-table-cell">Timestamp</td>
+                                </tr>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
