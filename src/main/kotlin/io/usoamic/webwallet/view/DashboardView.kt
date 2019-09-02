@@ -1,25 +1,15 @@
 package io.usoamic.webwallet.view
 
-import io.usoamic.usoamickotlinjs.other.Config
 import io.usoamic.webwallet.base.Application
-import io.usoamic.webwallet.base.View
-import io.usoamic.webwallet.exception.WalletNotFoundException
-import io.usoamic.webwallet.model.Account
+import js.externals.jquery.JQuery
 import js.externals.jquery.jQuery
-import kotlin.browser.localStorage
+import org.w3c.dom.HTMLElement
 
-class DashboardView(application: Application) : View(application) {
-
+class DashboardView(application: Application) : WalletView(application) {
     override val view = jQuery("#dashboard_view")
-    private val account get() =  localStorage.getItem(Config.ACCOUNT_FILENAME)?.let {
-            JSON.parse<Account>(it)
-    } ?: throw WalletNotFoundException()
+    override val navBarItem: JQuery<HTMLElement>? = jQuery("#dashboard_item")
 
-    init {
-        application.showNavigationBar()
-//        println("address: ${account.address}")
-
-    }
+    init { }
 
     companion object {
         fun newInstance(application: Application) {
