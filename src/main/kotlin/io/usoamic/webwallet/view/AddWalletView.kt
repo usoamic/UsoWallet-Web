@@ -17,9 +17,12 @@ import js.externals.toastr.toastr
 import io.usoamic.web3kt.wallet.extension.toJsonString
 import kotlin.browser.localStorage
 import io.usoamic.usoamickotlinjs.other.Config
+import js.externals.jquery.JQuery
+import org.w3c.dom.HTMLElement
 
 class AddWalletView(application: Application) : View(application) {
     override val view = jQuery("#add_wallet_view")
+    override val navBarItem: JQuery<HTMLElement>? = null
     private val privateKeyInput = jQuery("#add_pk_input")
     private val passwordInput = jQuery("#add_password_input")
     private val confirmPasswordInput = jQuery("#add_confirm_password_input")
@@ -54,7 +57,7 @@ class AddWalletView(application: Application) : View(application) {
                     val json = Wallet.fromPrivateKey(privateKey).toV3(password).toJsonString()
                     localStorage.setItem(Config.ACCOUNT_FILENAME, json)
                     stopLoading()
-                    DashboardView.newInstance(application)
+                    application.openPage("dashboard")
                 }
 
             } catch (e: Throwable) {
