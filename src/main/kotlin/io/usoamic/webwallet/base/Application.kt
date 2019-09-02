@@ -6,6 +6,7 @@ interface Application {
     fun startLoading()
     fun stopLoading()
     fun open(view: View)
+    fun openPage(hash: String)
     fun onException(t: Throwable)
     fun showNavigationBar()
     fun hideNavigationBar()
