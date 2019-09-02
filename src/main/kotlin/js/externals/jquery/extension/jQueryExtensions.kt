@@ -32,3 +32,12 @@ fun JQuery<HTMLElement>.addHidden() {
 fun JQuery<HTMLElement>.removeHidden() {
     this.removeClass("hidden")
 }
+
+fun JQuery<HTMLElement>.setActive(active: Boolean) {
+    if(active) {
+        this.addClass("active")
+    }
+    else {
+        this.removeClass("active")
+    }
+}
