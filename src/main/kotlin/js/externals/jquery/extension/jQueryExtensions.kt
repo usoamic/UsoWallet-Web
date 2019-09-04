@@ -8,7 +8,7 @@ fun JQuery<HTMLElement>.onClick(callback: () -> Unit) {
 }
 
 fun JQuery<HTMLElement>.enable() {
-    this.prop("disabled", true)
+    this.prop("disabled", false)
 }
 
 fun JQuery<HTMLElement>.clearVal() {
@@ -20,7 +20,7 @@ fun JQuery<HTMLElement>.clearText() {
 }
 
 fun JQuery<HTMLElement>.disable() {
-    this.prop("disabled", false)
+    this.prop("disabled", true)
 }
 
 fun JQuery<HTMLElement>.startLoading() {
