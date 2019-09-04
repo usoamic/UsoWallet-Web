@@ -4,13 +4,10 @@ import io.usoamic.web3kt.util.extension.removeHexPrefixIfExist
 import io.usoamic.webwallet.base.Application
 import io.usoamic.webwallet.base.View
 import io.usoamic.webwallet.util.ValidateUtil
-import js.externals.jquery.extension.onClick
 import js.externals.jquery.jQuery
 import io.usoamic.web3kt.wallet.extension.fromPrivateKey
 import io.usoamic.web3kt.wallet.Wallet
 import io.usoamic.webwallet.util.Async
-import js.externals.jquery.extension.startLoading
-import js.externals.jquery.extension.stopLoading
 import js.externals.toastr.extensions.error
 import js.externals.toastr.toastr
 import io.usoamic.web3kt.wallet.extension.toJsonString
@@ -18,6 +15,7 @@ import kotlin.browser.localStorage
 import io.usoamic.usoamickotlinjs.other.Config
 import io.usoamic.webwallet.enums.Page
 import js.externals.jquery.JQuery
+import js.externals.jquery.extension.*
 import org.w3c.dom.HTMLElement
 
 class AddWalletView(application: Application) : View(application) {
@@ -65,6 +63,12 @@ class AddWalletView(application: Application) : View(application) {
                 toastr.error(e.message)
             }
         }
+    }
+
+    override fun onStop() {
+        super.onStop()
+        saveBtn.enable()
+        clearInputs(listOf(privateKeyInput, passwordInput, confirmPasswordInput))
     }
 
     companion object {

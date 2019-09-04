@@ -46,6 +46,11 @@ class CreateWalletView(application: Application) : View(application) {
         }
     }
 
+    override fun onStop() {
+        super.onStop()
+        clearTexts(listOf(privateKeyElement, addressElement))
+    }
+
     companion object {
         fun newInstance(application: Application) {
             return application.open(CreateWalletView(application))
