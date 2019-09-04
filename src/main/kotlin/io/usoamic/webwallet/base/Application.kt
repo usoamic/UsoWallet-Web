@@ -10,4 +10,5 @@ interface Application {
     fun onException(t: Throwable)
     fun showNavigationBar()
     fun hideNavigationBar()
+    fun loadDependency()
 }
