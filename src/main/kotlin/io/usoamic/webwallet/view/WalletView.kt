@@ -16,6 +16,4 @@ abstract class WalletView(application: Application) : View(application) {
     init {
         application.showNavigationBar()
     }
-
-
 }

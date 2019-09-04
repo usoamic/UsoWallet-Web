@@ -1,5 +1,6 @@
 package io.usoamic.webwallet
 
+import io.usoamic.web3kt.kt2js.require
 import io.usoamic.webwallet.base.Application
 import io.usoamic.webwallet.base.View
 import io.usoamic.webwallet.view.*
@@ -17,6 +18,7 @@ class App : Application {
     private val loader = jQuery(".loader")
 
     init {
+        loadDependency()
         setListeners()
     }
 
@@ -43,6 +45,7 @@ class App : Application {
     }
 
     override fun openPage(hash: String) {
+        println("openPage")
         window.location.hash = "#$hash"
     }
 
@@ -92,6 +95,10 @@ class App : Application {
         if(!baseElement.hasClass("login_page")) {
             baseElement.addClass("login_page")
         }
+    }
+
+    override fun loadDependency() {
+        require("datatables.net-bs4")
     }
 }
 
