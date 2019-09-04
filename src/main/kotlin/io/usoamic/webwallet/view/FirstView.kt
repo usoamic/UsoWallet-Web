@@ -1,6 +1,6 @@
 package io.usoamic.webwallet.view
 
-import io.usoamic.webwallet.Page
+import io.usoamic.webwallet.enums.Page
 import io.usoamic.webwallet.base.Application
 import io.usoamic.webwallet.base.View
 import js.externals.jquery.JQuery

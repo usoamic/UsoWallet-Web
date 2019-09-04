@@ -1,4 +1,4 @@
-package io.usoamic.webwallet
+package io.usoamic.webwallet.enums
 
 enum class Page {
     FIRST,

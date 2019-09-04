@@ -1,6 +1,5 @@
 package io.usoamic.webwallet.view
 
-import io.usoamic.web3kt.kt2js.require
 import io.usoamic.web3kt.util.extension.removeHexPrefixIfExist
 import io.usoamic.webwallet.base.Application
 import io.usoamic.webwallet.base.View
@@ -17,7 +16,7 @@ import js.externals.toastr.toastr
 import io.usoamic.web3kt.wallet.extension.toJsonString
 import kotlin.browser.localStorage
 import io.usoamic.usoamickotlinjs.other.Config
-import io.usoamic.webwallet.Page
+import io.usoamic.webwallet.enums.Page
 import js.externals.jquery.JQuery
 import org.w3c.dom.HTMLElement
 

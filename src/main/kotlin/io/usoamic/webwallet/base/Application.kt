@@ -1,6 +1,6 @@
 package io.usoamic.webwallet.base
 
-import io.usoamic.webwallet.Page
+import io.usoamic.webwallet.enums.Page
 
 interface Application {
     var currentView: View
