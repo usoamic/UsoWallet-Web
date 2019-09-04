@@ -1,7 +1,8 @@
 package io.usoamic.webwallet.base
 
-import io.usoamic.webwallet.App
 import js.externals.jquery.JQuery
+import js.externals.jquery.extension.clearText
+import js.externals.jquery.extension.clearVal
 import org.w3c.dom.HTMLElement
 
 abstract class View(protected val application: Application) {
@@ -22,5 +23,17 @@ abstract class View(protected val application: Application) {
 
     open fun onStop() {
         view.hide()
+    }
+
+    protected fun clearInputs(list: List<JQuery<HTMLElement>>) {
+        list.forEach {
+            it.clearVal()
+        }
+    }
+
+    protected fun clearTexts(list: List<JQuery<HTMLElement>>) {
+        list.forEach {
+            it.clearText()
+        }
     }
 }
