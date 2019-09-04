@@ -1,7 +1,7 @@
 package io.usoamic.webwallet.view
 
-import io.usoamic.web3kt.kt2js.require
 import io.usoamic.webwallet.base.Application
+import io.usoamic.webwallet.base.WalletView
 import js.externals.jquery.JQuery
 import js.externals.jquery.jQuery
 import org.w3c.dom.HTMLElement

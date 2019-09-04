@@ -1,9 +1,7 @@
-package io.usoamic.webwallet.view
+package io.usoamic.webwallet.base
 
 import io.usoamic.usoamickotlinjs.other.Config
 import io.usoamic.webwallet.enums.Page
-import io.usoamic.webwallet.base.Application
-import io.usoamic.webwallet.base.View
 import io.usoamic.webwallet.exception.WalletNotFoundException
 import io.usoamic.webwallet.model.Account
 import js.externals.jquery.extension.onClick
