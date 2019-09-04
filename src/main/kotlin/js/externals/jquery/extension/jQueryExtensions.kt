@@ -7,6 +7,22 @@ fun JQuery<HTMLElement>.onClick(callback: () -> Unit) {
     this.on("click", callback)
 }
 
+fun JQuery<HTMLElement>.enable() {
+    this.prop("disabled", true)
+}
+
+fun JQuery<HTMLElement>.clearVal() {
+    this.`val`("")
+}
+
+fun JQuery<HTMLElement>.clearText() {
+    this.text("")
+}
+
+fun JQuery<HTMLElement>.disable() {
+    this.prop("disabled", false)
+}
+
 fun JQuery<HTMLElement>.startLoading() {
     this.data("text", this.html())
     this.html("<i class=\"fa fa-spinner fa-spin\"></i> Please wait...")
