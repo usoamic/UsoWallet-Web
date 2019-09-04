@@ -13,6 +13,7 @@ import js.externals.jquery.jQuery
 import org.w3c.dom.HTMLElement
 import kotlin.browser.localStorage
 import kotlin.browser.window
+import kotlin.js.Json
 
 class App : Application {
     private val baseElement: JQuery<HTMLElement> = jQuery("#html")
@@ -31,14 +32,14 @@ class App : Application {
         stopLoading()
     }
 
-    override fun startLoading() { }
+    override fun startLoading() {}
 
     override fun stopLoading() {
         loader.delay(0).fadeOut()
     }
 
     override fun open(view: View) {
-        if(::currentView.isInitialized) {
+        if (::currentView.isInitialized) {
             currentView.onStop()
             currentView.navBarItem?.setActive(false)
         }
@@ -63,56 +64,68 @@ class App : Application {
         window.addEventListener(
             "hashchange",
             {
-                println("hash: ${window.location.hash}")
-                try {
-                    val page = Page.valueOf(window.location.hash.replace("#", "").toUpperCase())
-                    println("page: $page")
-                    when (page) {
-                        Page.FIRST -> {
-                            FirstView.newInstance(this)
-                        }
-                        Page.ADD -> {
-                            AddWalletView.newInstance(this)
-                        }
-                        Page.CREATE -> {
-                            CreateWalletView.newInstance(this)
-                        }
-                        Page.DASHBOARD -> {
-                            DashboardView.newInstance(this)
-                        }
-                        Page.DEPOSIT -> {
-                            DepositView.newInstance(this)
-                        }
-                        Page.WITHDRAW -> {
-                            WithdrawView.newInstance(this)
-                        }
-                        Page.HISTORY -> {
-                            HistoryView.newInstance(this)
-                        }
+                val page = try {
+                    val p = Page.valueOf(window.location.hash.replace("#", "").toUpperCase())
+                    if (p.isAuthPage() && hasWallet()) {
+                        Page.DASHBOARD
+                    } else if (p.isLoginPage() && !hasWallet()) {
+                        Page.FIRST
+                    } else p
+                } catch (e: IllegalStateException) {
+                    if (hasWallet()) {
+                        Page.DASHBOARD
+                    } else {
+                        Page.FIRST
                     }
                 }
-                catch (e: IllegalStateException) {
-                    println("e1: ${e.message}")
-                    if (!localStorage.getItem(Config.ACCOUNT_FILENAME).isNullOrEmpty()) {
-                        DashboardView.newInstance(this)
-                    } else {
+                when (page) {
+                    Page.FIRST -> {
                         FirstView.newInstance(this)
                     }
-                    return@addEventListener
+                    Page.ADD -> {
+                        AddWalletView.newInstance(this)
+                    }
+                    Page.CREATE -> {
+                        CreateWalletView.newInstance(this)
+                    }
+                    Page.DASHBOARD -> {
+                        DashboardView.newInstance(this)
+                    }
+                    Page.DEPOSIT -> {
+                        DepositView.newInstance(this)
+                    }
+                    Page.WITHDRAW -> {
+                        WithdrawView.newInstance(this)
+                    }
+                    Page.HISTORY -> {
+                        HistoryView.newInstance(this)
+                    }
                 }
             },
             false
         )
     }
 
+    override fun hasWallet(): Boolean {
+        return (!getWallet().isNullOrEmpty())
+    }
+
+    override fun getWallet(): String? {
+        return localStorage.getItem(Config.ACCOUNT_FILENAME)
+    }
+
+    override fun setWallet(json: String) {
+        localStorage.setItem(Config.ACCOUNT_FILENAME, json)
+    }
+
     override fun showNavigationBar() {
-        if(baseElement.hasClass("login_page")) {
+        if (baseElement.hasClass("login_page")) {
             baseElement.removeClass("login_page")
         }
     }
 
     override fun hideNavigationBar() {
-        if(!baseElement.hasClass("login_page")) {
+        if (!baseElement.hasClass("login_page")) {
             baseElement.addClass("login_page")
         }
     }

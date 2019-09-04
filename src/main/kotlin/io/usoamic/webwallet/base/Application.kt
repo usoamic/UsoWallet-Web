@@ -13,4 +13,7 @@ interface Application {
     fun showNavigationBar()
     fun hideNavigationBar()
     fun loadDependency()
+    fun hasWallet(): Boolean
+    fun getWallet(): String?
+    fun setWallet(json: String)
 }
