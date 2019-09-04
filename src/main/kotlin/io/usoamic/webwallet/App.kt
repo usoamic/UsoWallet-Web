@@ -1,5 +1,6 @@
 package io.usoamic.webwallet
 
+import io.usoamic.usoamickotlinjs.other.Config
 import io.usoamic.web3kt.kt2js.require
 import io.usoamic.webwallet.base.Application
 import io.usoamic.webwallet.base.View
@@ -9,6 +10,7 @@ import js.externals.jquery.extension.onClick
 import js.externals.jquery.extension.setActive
 import js.externals.jquery.jQuery
 import org.w3c.dom.HTMLElement
+import kotlin.browser.localStorage
 import kotlin.browser.window
 
 class App : Application {
@@ -24,7 +26,7 @@ class App : Application {
 
     override fun onStart() {
         startLoading()
-        FirstView.newInstance(this)
+        openPage(Page.FIRST)
         stopLoading()
     }
 
@@ -44,9 +46,8 @@ class App : Application {
         currentView.onStart()
     }
 
-    override fun openPage(hash: String) {
-        println("openPage")
-        window.location.hash = "#$hash"
+    override fun openPage(page: Page) {
+        window.location.hash = "#${page.name.toLowerCase()}"
     }
 
     override fun onException(t: Throwable) {
@@ -62,23 +63,41 @@ class App : Application {
             "hashchange",
             {
                 println("hash: ${window.location.hash}")
-                when (window.location.hash) {
-                    "#dashboard" -> {
-                        println("1")
+                try {
+                    val page = Page.valueOf(window.location.hash.replace("#", ""))
+                    println("page: $page")
+                    when (page) {
+                        Page.FIRST -> {
+                            FirstView.newInstance(this)
+                        }
+                        Page.ADD -> {
+                            AddWalletView.newInstance(this)
+                        }
+                        Page.CREATE -> {
+                            CreateWalletView.newInstance(this)
+                        }
+                        Page.DASHBOARD -> {
+                            DashboardView.newInstance(this)
+                        }
+                        Page.DEPOSIT -> {
+                            DepositView.newInstance(this)
+                        }
+                        Page.WITHDRAW -> {
+                            WithdrawView.newInstance(this)
+                        }
+                        Page.HISTORY -> {
+                            HistoryView.newInstance(this)
+                        }
+                    }
+                }
+                catch (e: IllegalStateException) {
+                    println("e1: ${e.message}")
+                    if (!localStorage.getItem(Config.ACCOUNT_FILENAME).isNullOrEmpty()) {
                         DashboardView.newInstance(this)
+                    } else {
+                        FirstView.newInstance(this)
                     }
-                    "#deposit" -> {
-                        println("2")
-                        DepositView.newInstance(this)
-                    }
-                    "#withdraw" -> {
-                        println("3")
-                        WithdrawView.newInstance(this)
-                    }
-                    "#history" -> {
-                        println("4")
-                        HistoryView.newInstance(this)
-                    }
+                    return@addEventListener
                 }
             },
             false

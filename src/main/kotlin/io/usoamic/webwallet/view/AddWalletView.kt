@@ -17,6 +17,7 @@ import js.externals.toastr.toastr
 import io.usoamic.web3kt.wallet.extension.toJsonString
 import kotlin.browser.localStorage
 import io.usoamic.usoamickotlinjs.other.Config
+import io.usoamic.webwallet.Page
 import js.externals.jquery.JQuery
 import org.w3c.dom.HTMLElement
 
@@ -57,7 +58,7 @@ class AddWalletView(application: Application) : View(application) {
                     val json = Wallet.fromPrivateKey(privateKey).toV3(password).toJsonString()
                     localStorage.setItem(Config.ACCOUNT_FILENAME, json)
                     stopLoading()
-                    application.openPage("dashboard")
+                    application.openPage(Page.DASHBOARD)
                 }
 
             } catch (e: Throwable) {

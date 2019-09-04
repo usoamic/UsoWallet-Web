@@ -1,5 +1,6 @@
 package io.usoamic.webwallet.view
 
+import io.usoamic.webwallet.Page
 import io.usoamic.webwallet.base.Application
 import io.usoamic.webwallet.base.View
 import js.externals.jquery.JQuery
@@ -20,11 +21,11 @@ class FirstView(application: Application) : View(application) {
 
     private fun setListeners() {
         addBtn.onClick {
-           AddWalletView.newInstance(application)
+           application.openPage(Page.ADD)
         }
 
         createBtn.onClick {
-            CreateWalletView.newInstance(application)
+            application.openPage(Page.CREATE)
         }
     }
 
