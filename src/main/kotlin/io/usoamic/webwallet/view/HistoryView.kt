@@ -8,9 +8,14 @@ import org.w3c.dom.HTMLElement
 class HistoryView(application: Application) : WalletView(application) {
     override val view = jQuery("#history_view")
     override val navBarItem: JQuery<HTMLElement>? = jQuery("#history_item")
+    private val historyTable = jQuery("#history")
 
     init {
+        prepareTable()
+    }
 
+    private fun prepareTable() {
+        historyTable.dataTable()
     }
 
     companion object {
