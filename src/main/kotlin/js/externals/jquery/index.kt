@@ -33,6 +33,7 @@
 
 package js.externals.jquery
 
+import js.externals.datatables.net.model.DataTableOption
 import js.externals.jquery.JQuery.*
 import org.w3c.dom.*
 import org.w3c.dom.events.EventTarget
@@ -979,7 +980,6 @@ external interface JQuery<TElement : Node> : Iterable<TElement> {
     fun triggerHandler(eventType: String): Any?
     fun triggerHandler(eventType: Event<TElement, Nothing?>): Any?
     fun unbind(): JQuery<TElement> /* this */
-    fun dataTable()
 }
 external interface Iterable<T>
 external interface JQueryCallback : Callbacks<Function<*>>
