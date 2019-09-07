@@ -6,8 +6,11 @@ import io.usoamic.usoamickotlinjs.other.Config
 import io.usoamic.usoamickotlinjs.other.Config.Companion.CONTRACT_ABI
 import io.usoamic.usoamickotlinjs.other.Config.Companion.NODE
 import io.usoamic.web3kt.core.Web3
+import io.usoamic.web3kt.core.contract.model.CallOption
 import io.usoamic.web3kt.core.contract.util.Coin
 import io.usoamic.web3kt.core.extension.newContract
+import io.usoamic.web3kt.tx.block.DefaultBlockParameterName
+import io.usoamic.web3kt.util.EthUnit
 import io.usoamic.webwallet.enums.Page
 import io.usoamic.webwallet.enums.Transfer
 import io.usoamic.webwallet.exception.WalletNotFoundException
@@ -31,6 +34,7 @@ abstract class WalletView(application: Application) : View(application) {
         } ?: throw WalletNotFoundException()
 
     protected val address = account.address
+    protected val callOption = CallOption(address)
 
     init {
         application.showNavigationBar()
@@ -46,6 +50,26 @@ abstract class WalletView(application: Application) : View(application) {
 
     protected fun getTransactions(callback: (List<List<Any>>) -> Unit) {
         getTransactions(null, callback)
+    }
+
+    protected fun getEthBalance(callback: (String) -> Unit) {
+        web3.eth.getBalance(address, DefaultBlockParameterName.LATEST)
+            .then {
+                callback(web3.utils.fromWei(it, EthUnit.ETHER))
+            }
+            .catch {
+                onError(it)
+            }
+    }
+
+    protected fun getUsoBalance(callback: (Coin) -> Unit) {
+        methods.balanceOf(address).call(callOption)
+            .then {
+                callback(Coin.fromSat(it))
+            }
+            .catch {
+                onError(it)
+            }
     }
 
     protected fun getTransactions(lastId: Long?, callback: (List<List<Any>>) -> Unit) {
