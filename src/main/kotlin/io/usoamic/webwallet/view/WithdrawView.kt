@@ -153,8 +153,13 @@ class WithdrawView(application: Application) : WalletView(application) {
     }
 
     companion object {
-        fun newInstance(application: Application) {
-            return application.open(WithdrawView(application))
+        private var instance: WithdrawView? = null
+
+        fun open(application: Application) {
+            if(instance == null) {
+                instance = WithdrawView(application)
+            }
+            return application.open(instance!!)
         }
     }
 }

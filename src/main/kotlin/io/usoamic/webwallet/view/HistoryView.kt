@@ -26,8 +26,13 @@ class HistoryView(application: Application) : WalletView(application) {
     }
 
     companion object {
-        fun newInstance(application: Application) {
-            return application.open(HistoryView(application))
+        private var instance: HistoryView? = null
+
+        fun open(application: Application) {
+            if(instance == null) {
+                instance = HistoryView(application)
+            }
+            return application.open(instance!!)
         }
     }
 }

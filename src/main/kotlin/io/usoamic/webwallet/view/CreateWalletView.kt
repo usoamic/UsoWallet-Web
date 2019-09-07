@@ -52,8 +52,13 @@ class CreateWalletView(application: Application) : View(application) {
     }
 
     companion object {
-        fun newInstance(application: Application) {
-            return application.open(CreateWalletView(application))
+        private var instance: CreateWalletView? = null
+
+        fun open(application: Application) {
+            if(instance == null) {
+                instance = CreateWalletView(application)
+            }
+            return application.open(instance!!)
         }
     }
 }

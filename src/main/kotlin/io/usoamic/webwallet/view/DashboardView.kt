@@ -2,6 +2,7 @@ package io.usoamic.webwallet.view
 
 import io.usoamic.web3kt.core.contract.util.Coin
 import io.usoamic.webwallet.base.Application
+import io.usoamic.webwallet.base.View
 import io.usoamic.webwallet.base.WalletView
 import js.externals.datatables.net.JQueryDataTable
 import js.externals.datatables.net.extension.dataTable
@@ -63,13 +64,18 @@ class DashboardView(application: Application) : WalletView(application) {
     private fun prepareLastTransfers() {
         lastTransfersTable.dataTable(DataTableOption.initEmpty())
         getTransactions(10) {
-            lastTransfersTable.dataTable(DataTableOption(it))
+            lastTransfersTable.dataTable(DataTableOption(data = it))
         }
     }
 
     companion object {
-        fun newInstance(application: Application) {
-            return application.open(DashboardView(application))
+        private var instance: DashboardView? = null
+
+        fun open(application: Application) {
+            if(instance == null) {
+                instance = DashboardView(application)
+            }
+            return application.open(instance!!)
         }
     }
 }

@@ -30,8 +30,13 @@ class FirstView(application: Application) : View(application) {
     }
 
     companion object {
-        fun newInstance(application: Application) {
-            application.open(FirstView(application))
+        private var instance: FirstView? = null
+
+        fun open(application: Application) {
+            if(instance == null) {
+                instance = FirstView(application)
+            }
+            return application.open(instance!!)
         }
     }
 }

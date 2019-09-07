@@ -34,8 +34,13 @@ class DepositView(application: Application) : WalletView(application) {
     }
 
     companion object {
-        fun newInstance(application: Application) {
-            return application.open(DepositView(application))
+        private var instance: DepositView? = null
+
+        fun open(application: Application) {
+            if(instance == null) {
+                instance = DepositView(application)
+            }
+            return application.open(instance!!)
         }
     }
 }

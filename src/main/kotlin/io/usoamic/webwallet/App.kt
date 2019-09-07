@@ -10,12 +10,10 @@ import js.externals.jquery.JQuery
 import js.externals.jquery.extension.onClick
 import js.externals.jquery.extension.setActive
 import js.externals.jquery.jQuery
-import js.externals.toastr.extensions.error
 import js.externals.toastr.toastr
 import org.w3c.dom.HTMLElement
 import kotlin.browser.localStorage
 import kotlin.browser.window
-import kotlin.js.Json
 
 class App : Application {
     private val baseElement: JQuery<HTMLElement> = jQuery("#html")
@@ -67,7 +65,7 @@ class App : Application {
 
     private fun setListeners() {
         toFirstBtn.onClick {
-            FirstView.newInstance(this)
+            FirstView.open(this)
         }
 
         window.addEventListener(
@@ -97,25 +95,25 @@ class App : Application {
 
         when (page) {
             Page.FIRST -> {
-                FirstView.newInstance(this)
+                FirstView.open(this)
             }
             Page.ADD -> {
-                AddWalletView.newInstance(this)
+                AddWalletView.open(this)
             }
             Page.CREATE -> {
-                CreateWalletView.newInstance(this)
+                CreateWalletView.open(this)
             }
             Page.DASHBOARD -> {
-                DashboardView.newInstance(this)
+                DashboardView.open(this)
             }
             Page.DEPOSIT -> {
-                DepositView.newInstance(this)
+                DepositView.open(this)
             }
             Page.WITHDRAW -> {
-                WithdrawView.newInstance(this)
+                WithdrawView.open(this)
             }
             Page.HISTORY -> {
-                HistoryView.newInstance(this)
+                HistoryView.open(this)
             }
         }
     }
