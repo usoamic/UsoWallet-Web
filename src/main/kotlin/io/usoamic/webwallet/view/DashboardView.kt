@@ -13,7 +13,6 @@ import js.externals.datatables.net.model.DataTableOption
 import js.externals.jquery.JQuery
 import js.externals.jquery.jQuery
 import org.w3c.dom.HTMLElement
-import kotlin.js.Date
 
 class DashboardView(application: Application) : WalletView(application) {
     override val view = jQuery("#dashboard_view")
@@ -46,9 +45,7 @@ class DashboardView(application: Application) : WalletView(application) {
                     )
                 )
             }
-            val options = DataTableOption(
-                data = list
-            )
+            val options = DataTableOption(list)
             lastTransfersTable.dataTable(options)
         }
     }
