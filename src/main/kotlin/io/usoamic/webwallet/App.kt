@@ -55,14 +55,14 @@ class App : Application {
         window.location.hash = "#${page.name.toLowerCase()}"
     }
 
-    override fun onException(s: String?) {
+    override fun onError(s: String?) {
         s?.let {
-            toastr.error(s)
+            toastr.error(it)
         }
     }
 
     override fun onException(t: Throwable) {
-        onException(t.message)
+        onError(t.message)
     }
 
     private fun setListeners() {

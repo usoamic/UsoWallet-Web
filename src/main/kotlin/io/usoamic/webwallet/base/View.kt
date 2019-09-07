@@ -37,15 +37,11 @@ abstract class View(protected val application: Application) {
         }
     }
 
-    protected fun onException(s: String?) {
-        s?.let {
-            application.onException(s)
-        }
+    open fun onError(s: String?) {
+        application.onError(s)
     }
 
-    protected fun onException(t: Throwable) {
-        t.message?.let {
-            onException(it)
-        }
+    open fun onException(t: Throwable) {
+        application.onException(t)
     }
 }
