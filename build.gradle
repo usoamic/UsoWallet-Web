@@ -43,6 +43,7 @@ kotlinFrontend {
         dependency "jquery", "^3.2.0-0"
         dependency "worker", "^0.4.0"
         dependency "datatables.net-bs4", "^1.10.19"
+        dependency "qrcode", "^1.4.1"
 //        dependency "kotlinx-coroutines-core", "^1.3.0"
     }
 
