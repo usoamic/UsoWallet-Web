@@ -75,23 +75,29 @@ abstract class WalletView(application: Application) : View(application) {
     }
 
     protected fun getTransactions(lastId: Long?, callback: (List<List<Any>>) -> Unit) {
-        methods.getTransactionsByAddress(address, lastId) {
-            val list = mutableListOf<List<Any>>()
-            it.forEach { tx ->
-                val txType = TxUtils.getTxType(address, tx.from)
-                list.add(
-                    listOf(
-                        txType.toPlainString(),
-                        when (txType) {
-                            Transfer.DEPOSIT -> tx.from
-                            Transfer.WITHDRAWAL -> tx.to
-                        },
-                        Coin.fromSat(tx.value).toPlainString(),
-                        Timestamp.fromBigNumber(tx.timestamp).toLocaleString()
+        lastId?.let { lId ->
+            methods.getTransactionsByAddress(address, lId) {
+                val list = mutableListOf<List<Any>>()
+                var id = it.size
+
+                it.forEach { tx ->
+                    val txType = TxUtils.getTxType(address, tx.from)
+                    list.add(
+                        listOf(
+                            id,
+                            txType.toPlainString(),
+                            when (txType) {
+                                Transfer.DEPOSIT -> tx.from
+                                Transfer.WITHDRAWAL -> tx.to
+                            },
+                            Coin.fromSat(tx.value).toPlainString(),
+                            Timestamp.fromBigNumber(tx.timestamp).toLocaleString() + ", " + tx.txId
+                        )
                     )
-                )
+                    id--
+                }
+                callback(list)
             }
-            callback(list)
         }
     }
 }
