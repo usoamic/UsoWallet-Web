@@ -43,6 +43,7 @@ class App : Application {
             currentView.onStop()
             currentView.navBarItem?.setActive(false)
         }
+
         view.navBarItem?.setActive(true)
         currentView = view
         currentView.onStart()
@@ -85,7 +86,7 @@ class App : Application {
                 Page.FIRST
             }
         }
-        println("page: $page")
+
         when (page) {
             Page.FIRST -> {
                 FirstView.newInstance(this)
