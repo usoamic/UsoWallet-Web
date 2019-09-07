@@ -11,7 +11,7 @@ import io.usoamic.web3kt.core.contract.util.Coin
 import io.usoamic.web3kt.core.extension.newContract
 import io.usoamic.web3kt.tx.block.DefaultBlockParameterName
 import io.usoamic.web3kt.util.EthUnit
-import io.usoamic.web3kt.util.extension.addHexPrefix
+import io.usoamic.web3kt.util.extension.addPrefixIfNotExist
 import io.usoamic.webwallet.enums.Page
 import io.usoamic.webwallet.enums.Transfer
 import io.usoamic.webwallet.exception.WalletNotFoundException
@@ -35,7 +35,7 @@ abstract class WalletView(application: Application) : View(application) {
         } ?: throw WalletNotFoundException()
 
     protected val account get() = JSON.stringify(_account)
-    protected val address = _account.address.addHexPrefix()
+    protected val address = _account.address.addPrefixIfNotExist()
     protected val callOption = CallOption(address)
 
     init {
