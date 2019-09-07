@@ -29,12 +29,13 @@ abstract class WalletView(application: Application) : View(application) {
 
     private val logoutBtn = jQuery("#logout")
 
-    protected val account
+    private val _account
         get() = localStorage.getItem(Config.ACCOUNT_FILENAME)?.let {
             JSON.parse<Account>(it)
         } ?: throw WalletNotFoundException()
 
-    protected val address = account.address.addHexPrefix()
+    protected val account get() = JSON.stringify(_account)
+    protected val address = _account.address.addHexPrefix()
     protected val callOption = CallOption(address)
 
     init {
@@ -59,7 +60,7 @@ abstract class WalletView(application: Application) : View(application) {
                 callback(web3.utils.fromWei(it, EthUnit.ETHER))
             }
             .catch {
-                onError(it)
+                onException(it)
             }
     }
 
@@ -69,7 +70,7 @@ abstract class WalletView(application: Application) : View(application) {
                 callback(Coin.fromSat(it))
             }
             .catch {
-                onError(it)
+                onException(it)
             }
     }
 
