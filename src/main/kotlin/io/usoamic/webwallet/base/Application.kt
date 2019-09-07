@@ -10,6 +10,7 @@ interface Application {
     fun open(view: View)
     fun openPage(page: Page)
     fun onException(t: Throwable)
+    fun onException(t: String?)
     fun showNavigationBar()
     fun hideNavigationBar()
     fun loadDependency()

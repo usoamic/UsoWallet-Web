@@ -10,6 +10,8 @@ import js.externals.jquery.JQuery
 import js.externals.jquery.extension.onClick
 import js.externals.jquery.extension.setActive
 import js.externals.jquery.jQuery
+import js.externals.toastr.extensions.error
+import js.externals.toastr.toastr
 import org.w3c.dom.HTMLElement
 import kotlin.browser.localStorage
 import kotlin.browser.window
@@ -53,8 +55,14 @@ class App : Application {
         window.location.hash = "#${page.name.toLowerCase()}"
     }
 
+    override fun onException(s: String?) {
+        s?.let {
+            toastr.error(s)
+        }
+    }
+
     override fun onException(t: Throwable) {
-        println(t.message)
+        onException(t.message)
     }
 
     private fun setListeners() {
