@@ -1,5 +1,6 @@
 package io.usoamic.webwallet.view
 
+import io.usoamic.web3kt.core.contract.util.Coin
 import io.usoamic.webwallet.base.Application
 import io.usoamic.webwallet.base.WalletView
 import js.externals.datatables.net.JQueryDataTable
@@ -14,8 +15,49 @@ class DashboardView(application: Application) : WalletView(application) {
     override val navBarItem: JQuery<HTMLElement>? = jQuery("#dashboard_item")
     private val lastTransfersTable = jQuery("#last_transfers").unsafeCast<JQueryDataTable>()
 
+    private val ethBalance = jQuery("#eth_balance")
+    private val usoBalance = jQuery("#uso_balance")
+    private val ethHeight = jQuery("#eth_height")
+    private val usoSupply = jQuery("#uso_supply")
+
     init {
         prepareLastTransfers()
+        prepareEthBalance()
+        prepareUsoBalance()
+        prepareEthHeight()
+        prepareUsoSupply()
+    }
+
+    private fun prepareEthBalance() {
+        getEthBalance {
+            ethBalance.text(it)
+        }
+    }
+
+    private fun prepareUsoBalance() {
+        getUsoBalance {
+            usoBalance.text(it.toPlainString())
+        }
+    }
+
+    private fun prepareEthHeight() {
+        web3.eth.getBlockNumber()
+            .then {
+                ethHeight.text(it.toString())
+            }
+            .catch {
+                onError(it)
+            }
+    }
+
+    private fun prepareUsoSupply() {
+        methods.getSupply().call(callOption)
+            .then {
+                usoSupply.text(Coin.fromSat(it).toMillion())
+            }
+            .catch {
+                onError(it)
+            }
     }
 
     private fun prepareLastTransfers() {
