@@ -37,7 +37,15 @@ abstract class View(protected val application: Application) {
         }
     }
 
-    protected fun onError(t: Throwable) {
-        js("alert(t.message)")
+    protected fun onException(s: String?) {
+        s?.let {
+            application.onException(s)
+        }
+    }
+
+    protected fun onException(t: Throwable) {
+        t.message?.let {
+            onException(it)
+        }
     }
 }
