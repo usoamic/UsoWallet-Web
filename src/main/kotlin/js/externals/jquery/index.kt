@@ -916,6 +916,8 @@ external interface JQuery<TElement : Node> : Iterable<TElement> {
     fun `val`(): dynamic /* String | Number | Array<String> | Nothing? */
     @JsName("val")
     fun content(): String
+    @JsName("val")
+    fun content(value: String): String
     fun width(value: String): JQuery<TElement> /* this */
     fun width(value: Number): JQuery<TElement> /* this */
     fun width(value: (`this`: TElement, index: Number, value: Number) -> dynamic /* String | Number */): JQuery<TElement> /* this */
