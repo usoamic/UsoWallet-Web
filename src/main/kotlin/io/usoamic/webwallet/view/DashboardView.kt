@@ -46,7 +46,7 @@ class DashboardView(application: Application) : WalletView(application) {
                 ethHeight.text(it.toString())
             }
             .catch {
-                onError(it)
+                onException(it)
             }
     }
 
@@ -56,7 +56,7 @@ class DashboardView(application: Application) : WalletView(application) {
                 usoSupply.text(Coin.fromSat(it).toMillion())
             }
             .catch {
-                onError(it)
+                onException(it)
             }
     }
 
