@@ -4,6 +4,7 @@ import io.usoamic.webwallet.base.Application
 import io.usoamic.webwallet.base.WalletView
 import js.externals.datatables.net.JQueryDataTable
 import js.externals.datatables.net.extension.dataTable
+import js.externals.datatables.net.model.DataTableOption
 import js.externals.jquery.JQuery
 import js.externals.jquery.jQuery
 import org.w3c.dom.HTMLElement
@@ -14,11 +15,14 @@ class HistoryView(application: Application) : WalletView(application) {
     private val historyTable = jQuery("#history").unsafeCast<JQueryDataTable>()
 
     init {
-        prepareTable()
+        prepareHistory()
     }
 
-    private fun prepareTable() {
-        (historyTable as JQueryDataTable).dataTable()
+    private fun prepareHistory() {
+        historyTable.dataTable(DataTableOption.initEmpty())
+        getTransactions {
+            historyTable.dataTable(DataTableOption(it))
+        }
     }
 
     companion object {
