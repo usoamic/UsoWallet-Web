@@ -36,4 +36,8 @@ abstract class View(protected val application: Application) {
             it.clearText()
         }
     }
+
+    protected fun onError(t: Throwable) {
+        js("alert(t.message)")
+    }
 }
