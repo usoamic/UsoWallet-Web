@@ -47,6 +47,7 @@ class App : Application {
         view.navBarItem?.setActive(true)
         currentView = view
         currentView.onStart()
+        currentView.onRefresh()
     }
 
     override fun openPage(page: Page) {
