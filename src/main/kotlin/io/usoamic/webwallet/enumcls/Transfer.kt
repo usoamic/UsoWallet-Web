@@ -2,7 +2,9 @@ package io.usoamic.webwallet.enumcls
 
 enum class Transfer {
     DEPOSIT,
-    WITHDRAWAL;
+    WITHDRAWAL,
+    INTERNAL,
+    UNKNOWN;
 
     fun toPlainString(): String {
         val str = this.toString()
