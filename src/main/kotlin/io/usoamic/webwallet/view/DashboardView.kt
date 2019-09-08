@@ -2,7 +2,6 @@ package io.usoamic.webwallet.view
 
 import io.usoamic.web3kt.core.contract.util.Coin
 import io.usoamic.webwallet.base.Application
-import io.usoamic.webwallet.base.View
 import io.usoamic.webwallet.base.WalletView
 import js.externals.datatables.net.JQueryDataTable
 import js.externals.datatables.net.extension.dataTable
@@ -20,28 +19,34 @@ class DashboardView(application: Application) : WalletView(application) {
     private val usoBalance = jQuery("#uso_balance")
     private val ethHeight = jQuery("#eth_height")
     private val usoSupply = jQuery("#uso_supply")
+    private var numberOfLastTransfers: Long = 0
+
 
     init {
         prepareLastTransfers()
-        prepareEthBalance()
-        prepareUsoBalance()
-        prepareEthHeight()
-        prepareUsoSupply()
     }
 
-    private fun prepareEthBalance() {
+    override fun onRefresh() {
+        refreshEthBalance()
+        refreshUsoBalance()
+        refreshEthHeight()
+        refreshUsoSupply()
+        refreshLastTransfers()
+    }
+
+    private fun refreshEthBalance() {
         getEthBalance {
             ethBalance.text(it)
         }
     }
 
-    private fun prepareUsoBalance() {
+    private fun refreshUsoBalance() {
         getUsoBalance {
             usoBalance.text(it.toPlainString())
         }
     }
 
-    private fun prepareEthHeight() {
+    private fun refreshEthHeight() {
         web3.eth.getBlockNumber()
             .then {
                 ethHeight.text(it.toString())
@@ -51,7 +56,7 @@ class DashboardView(application: Application) : WalletView(application) {
             }
     }
 
-    private fun prepareUsoSupply() {
+    private fun refreshUsoSupply() {
         methods.getSupply().call(callOption)
             .then {
                 usoSupply.text(Coin.fromSat(it).toMillion())
@@ -62,8 +67,12 @@ class DashboardView(application: Application) : WalletView(application) {
     }
 
     private fun prepareLastTransfers() {
-        lastTransfersTable.dataTable(DataTableOption.initEmpty())
-        getTransactions(10) {
+        lastTransfersTable.dataTable(DataTableOption.initLoading())
+    }
+
+    private fun refreshLastTransfers() {
+        getTransactions(10, numberOfLastTransfers) {
+            numberOfLastTransfers = it.size.toLong()
             lastTransfersTable.dataTable(DataTableOption(data = it))
         }
     }

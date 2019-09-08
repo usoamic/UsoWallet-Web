@@ -21,6 +21,8 @@ abstract class View(protected val application: Application) {
         view.show()
     }
 
+    open fun onRefresh() { }
+
     open fun onStop() {
         view.hide()
     }
