@@ -15,6 +15,10 @@ fun JQuery<HTMLElement>.clearVal() {
     this.`val`("")
 }
 
+fun JQuery<HTMLElement>.clearContent() {
+    clearVal()
+}
+
 fun JQuery<HTMLElement>.clearText() {
     this.text("")
 }
@@ -30,11 +34,12 @@ fun JQuery<HTMLElement>.startLoading() {
 }
 
 fun JQuery<HTMLElement>.stopLoading(disable: Boolean = false) {
-    val text = this.data("text") as String
+    val textAny: Any? = this.data("text")
+    val text = if(textAny == null) "" else (textAny as String)
     if(text.isNotEmpty()) {
         this.html(text)
-        this.prop("disabled", disable)
     }
+    this.prop("disabled", disable)
 }
 
 fun JQuery<HTMLElement>.showLoading() {
