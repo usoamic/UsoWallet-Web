@@ -4,7 +4,7 @@ import io.usoamic.usoamickotlinjs.other.Config
 import io.usoamic.web3kt.kt2js.require
 import io.usoamic.webwallet.base.Application
 import io.usoamic.webwallet.base.View
-import io.usoamic.webwallet.enums.Page
+import io.usoamic.webwallet.enumcls.Page
 import io.usoamic.webwallet.view.*
 import js.externals.jquery.JQuery
 import js.externals.jquery.extension.onClick

@@ -16,7 +16,7 @@ import io.usoamic.web3kt.util.extension.removeHexPrefixIfExist
 import io.usoamic.web3kt.wallet.Wallet
 import io.usoamic.webwallet.base.Application
 import io.usoamic.webwallet.base.WalletView
-import io.usoamic.webwallet.enums.Asset
+import io.usoamic.webwallet.enumcls.Asset
 import io.usoamic.webwallet.exception.ValidateUtilException
 import io.usoamic.webwallet.util.Alert
 import io.usoamic.webwallet.util.ValidateUtil

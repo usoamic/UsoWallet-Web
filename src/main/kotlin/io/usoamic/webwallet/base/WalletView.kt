@@ -12,8 +12,8 @@ import io.usoamic.web3kt.core.extension.newContract
 import io.usoamic.web3kt.tx.block.DefaultBlockParameterName
 import io.usoamic.web3kt.util.EthUnit
 import io.usoamic.web3kt.util.extension.addPrefixIfNotExist
-import io.usoamic.webwallet.enums.Page
-import io.usoamic.webwallet.enums.Transfer
+import io.usoamic.webwallet.enumcls.Page
+import io.usoamic.webwallet.enumcls.Transfer
 import io.usoamic.webwallet.exception.WalletNotFoundException
 import io.usoamic.webwallet.model.Account
 import io.usoamic.webwallet.other.Timestamp

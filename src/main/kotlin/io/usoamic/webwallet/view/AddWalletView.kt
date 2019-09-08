@@ -13,7 +13,7 @@ import js.externals.toastr.toastr
 import io.usoamic.web3kt.wallet.extension.toJsonString
 import kotlin.browser.localStorage
 import io.usoamic.usoamickotlinjs.other.Config
-import io.usoamic.webwallet.enums.Page
+import io.usoamic.webwallet.enumcls.Page
 import js.externals.jquery.JQuery
 import js.externals.jquery.extension.*
 import org.w3c.dom.HTMLElement

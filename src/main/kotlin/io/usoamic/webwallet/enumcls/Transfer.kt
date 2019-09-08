@@ -1,4 +1,4 @@
-package io.usoamic.webwallet.enums
+package io.usoamic.webwallet.enumcls
 
 enum class Transfer {
     DEPOSIT,

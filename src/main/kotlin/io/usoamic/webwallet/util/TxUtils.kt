@@ -1,6 +1,6 @@
 package io.usoamic.webwallet.util
 
-import io.usoamic.webwallet.enums.Transfer
+import io.usoamic.webwallet.enumcls.Transfer
 
 class TxUtils {
     companion object {
