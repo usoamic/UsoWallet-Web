@@ -2,6 +2,7 @@ package io.usoamic.webwallet.base
 
 import io.usoamic.usoamickotlinjs.core.Usoamic
 import io.usoamic.usoamickotlinjs.core.extension.getTransactionsByAddress
+import io.usoamic.usoamickotlinjs.model.Transaction
 import io.usoamic.usoamickotlinjs.other.Config
 import io.usoamic.usoamickotlinjs.other.Config.Companion.CONTRACT_ABI
 import io.usoamic.usoamickotlinjs.other.Config.Companion.NODE
@@ -50,10 +51,6 @@ abstract class WalletView(application: Application) : View(application) {
         }
     }
 
-    protected fun getTransactions(callback: (List<List<Any>>) -> Unit) {
-        getTransactions(null, callback)
-    }
-
     protected fun getEthBalance(callback: (String) -> Unit) {
         web3.eth.getBalance(address, DefaultBlockParameterName.LATEST)
             .then {
@@ -74,29 +71,38 @@ abstract class WalletView(application: Application) : View(application) {
             }
     }
 
-    protected fun getTransactions(lastId: Long?, callback: (List<List<Any>>) -> Unit) {
+    protected fun getTransactions(lastId: Long?, loadedLastId: Long, callback: (List<List<Any>>) -> Unit) {
         lastId?.let { lId ->
-            methods.getTransactionsByAddress(address, lId) {
-                val list = mutableListOf<List<Any>>()
-                var id = it.size
+            methods.getTransactionsByAddress(address, lId, loadedLastId) { list: MutableList<Transaction>, throwable: Throwable?, hasUpdate: Boolean ->
+                if(!hasUpdate) {
+                    return@getTransactionsByAddress
+                }
+                if(throwable != null) {
+                    onException(throwable)
+                    return@getTransactionsByAddress
+                }
+                val txList = mutableListOf<List<Any>>()
+                var id = list.size
 
-                it.forEach { tx ->
-                    val txType = TxUtils.getTxType(address, tx.from)
-                    list.add(
+                list.forEach { tx ->
+                    val txType = TxUtils.getTxType(address, tx.from, tx.to)
+                    txList.add(
                         listOf(
                             id,
                             txType.toPlainString(),
                             when (txType) {
                                 Transfer.DEPOSIT -> tx.from
                                 Transfer.WITHDRAWAL -> tx.to
+                                Transfer.INTERNAL -> address
+                                Transfer.UNKNOWN -> "N/A"
                             },
                             Coin.fromSat(tx.value).toPlainString(),
-                            Timestamp.fromBigNumber(tx.timestamp).toLocaleString() + ", " + tx.txId
+                            Timestamp.fromBigNumber(tx.timestamp).toLocaleString()
                         )
                     )
                     id--
                 }
-                callback(list)
+                callback(txList)
             }
         }
     }
