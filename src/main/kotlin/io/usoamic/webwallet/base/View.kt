@@ -40,10 +40,12 @@ abstract class View(protected val application: Application) {
     }
 
     open fun onError(s: String?) {
+        stopLoading()
         application.onError(s)
     }
 
     open fun onException(t: Throwable) {
+        stopLoading()
         application.onException(t)
     }
 }
