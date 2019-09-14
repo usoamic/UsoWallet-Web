@@ -6,7 +6,6 @@ import js.externals.jquery.extension.onClick
 import js.externals.jquery.jQuery
 import io.usoamic.web3kt.wallet.Wallet
 import io.usoamic.webwallet.enumcls.Page
-import io.usoamic.webwallet.util.Alert
 import io.usoamic.webwallet.util.Async
 import js.externals.jquery.JQuery
 import js.externals.jquery.extension.removeHidden
