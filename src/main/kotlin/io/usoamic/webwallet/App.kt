@@ -44,6 +44,8 @@ class App : Application {
             currentView.navBarItem?.setActive(false)
         }
 
+        setTitle(view)
+
         view.navBarItem?.setActive(true)
         currentView = view
         currentView.onStart()
@@ -76,6 +78,20 @@ class App : Application {
             },
             false
         )
+    }
+
+    private fun setTitle(view: View) {
+        val pageTitle = when(view) {
+            is FirstView -> "Login"
+            is AddWalletView -> "Add Wallet"
+            is CreateWalletView -> "Create Wallet"
+            is DashboardView -> "Dashboard"
+            is DepositView -> "Deposit"
+            is WithdrawView -> "Withdraw"
+            is HistoryView -> "History"
+            else -> ""
+        }
+        window.document.title = "UsoWallet" + (if(pageTitle.isNotEmpty()) " - $pageTitle" else "")
     }
 
     private fun onHashChange() {
