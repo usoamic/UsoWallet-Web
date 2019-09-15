@@ -6,6 +6,7 @@ import io.usoamic.usoamickotlinjs.model.Transaction
 import io.usoamic.usoamickotlinjs.other.Config
 import io.usoamic.usoamickotlinjs.other.Config.Companion.CONTRACT_ABI
 import io.usoamic.usoamickotlinjs.other.Config.Companion.NODE
+import io.usoamic.web3kt.bignumber.extension.toBigNumber
 import io.usoamic.web3kt.core.Web3
 import io.usoamic.web3kt.core.contract.model.CallOption
 import io.usoamic.web3kt.core.contract.util.Coin
@@ -54,7 +55,7 @@ abstract class WalletView(application: Application) : View(application) {
     protected fun getEthBalance(callback: (String) -> Unit) {
         web3.eth.getBalance(address, DefaultBlockParameterName.LATEST)
             .then {
-                callback(web3.utils.fromWei(it, EthUnit.ETHER))
+                callback(web3.utils.fromWei(it, EthUnit.ETHER).toBigNumber().toPrecision(5).toString())
             }
             .catch {
                 onException(it)
