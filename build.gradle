@@ -17,7 +17,7 @@ apply plugin: 'kotlin-dce-js'
 apply plugin: 'org.jetbrains.kotlin.frontend'
 
 group 'io.usoamic'
-version '1.0-SNAPSHOT'
+version '1.0.0'
 
 repositories {
     mavenCentral()
@@ -29,23 +29,13 @@ repositories {
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-js"
-    implementation name: 'web3kt-1.0.3', ext: 'jar'
-    implementation name: 'usoamic-kotlinjs-1.0.5', ext: 'jar'
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core-js:1.3.0'
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
     testImplementation "org.jetbrains.kotlin:kotlin-test-js"
 }
 
 kotlinFrontend {
     downloadNodeJsVersion = "latest"
-
-    npm {
-        dependency "toastr", "^2.1.4"
-        dependency "jquery", "^3.2.0-0"
-        dependency "worker", "^0.4.0"
-        dependency "datatables.net-bs4", "^1.10.19"
-        dependency "qrcode", "^1.4.1"
-//        dependency "kotlinx-coroutines-core", "^1.3.0"
-    }
 
     webpackBundle {
         bundleName = "main"

@@ -9,7 +9,7 @@ import io.usoamic.web3kt.buffer.extension.fromHex
 import io.usoamic.web3kt.buffer.extension.toHex
 import io.usoamic.web3kt.core.contract.model.EstimateGasOption
 import io.usoamic.web3kt.core.contract.util.Coin
-import io.usoamic.web3kt.tx.Transaction
+import io.usoamic.web3kt.tx.Tx
 import io.usoamic.web3kt.tx.block.DefaultBlockParameterName
 import io.usoamic.web3kt.tx.model.RawTransaction
 import io.usoamic.web3kt.util.EthUnit
@@ -176,7 +176,7 @@ class WithdrawView(application: Application) : WalletView(application) {
     private fun sendTransaction(asset: Asset, transaction: RawTransaction, password: String) {
         val privateKey = Wallet.fromV3(account, password).getPrivateKeyAsString().removeHexPrefixIfExist()
 
-        val tx = Transaction(transaction)
+        val tx = Tx(transaction)
         tx.sign(Buffer.fromHex(privateKey))
 
         val signedTransaction = tx.serialize()

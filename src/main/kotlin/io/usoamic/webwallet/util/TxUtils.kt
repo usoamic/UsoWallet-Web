@@ -1,18 +1,18 @@
 package io.usoamic.webwallet.util
 
-import io.usoamic.webwallet.enumcls.Transfer
+import io.usoamic.webwallet.enumcls.TransferType
 
 class TxUtils {
     companion object {
-        fun getTxType(owner: String, from: String, to: String): Transfer {
+        fun getTxType(owner: String, from: String, to: String): TransferType {
             val lcOwner = owner.toLowerCase()
             val lcFrom = from.toLowerCase()
             val lcTo = to.toLowerCase()
             return when {
-                ((lcOwner != lcFrom) && (lcOwner == lcTo)) -> Transfer.DEPOSIT
-                ((lcOwner == lcFrom) && (lcOwner != lcTo)) -> Transfer.WITHDRAWAL
-                ((lcOwner == lcFrom) && (lcOwner == lcTo)) -> Transfer.INTERNAL
-                else -> Transfer.UNKNOWN
+                ((lcOwner != lcFrom) && (lcOwner == lcTo)) -> TransferType.DEPOSIT
+                ((lcOwner == lcFrom) && (lcOwner != lcTo)) -> TransferType.WITHDRAWAL
+                ((lcOwner == lcFrom) && (lcOwner == lcTo)) -> TransferType.INTERNAL
+                else -> TransferType.UNKNOWN
             }
         }
     }

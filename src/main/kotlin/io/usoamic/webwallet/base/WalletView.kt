@@ -2,7 +2,7 @@ package io.usoamic.webwallet.base
 
 import io.usoamic.usoamickotlinjs.core.Usoamic
 import io.usoamic.usoamickotlinjs.core.extension.getTransactionsByAddress
-import io.usoamic.usoamickotlinjs.model.Transaction
+import io.usoamic.usoamickotlinjs.model.Transfer
 import io.usoamic.usoamickotlinjs.other.Config
 import io.usoamic.usoamickotlinjs.other.Config.Companion.CONTRACT_ABI
 import io.usoamic.usoamickotlinjs.other.Config.Companion.NODE
@@ -13,9 +13,9 @@ import io.usoamic.web3kt.core.contract.util.Coin
 import io.usoamic.web3kt.core.extension.newContract
 import io.usoamic.web3kt.tx.block.DefaultBlockParameterName
 import io.usoamic.web3kt.util.EthUnit
-import io.usoamic.web3kt.util.extension.addPrefixIfNotExist
+import io.usoamic.web3kt.util.extension.addHexPrefixIfNotExist
 import io.usoamic.webwallet.enumcls.Page
-import io.usoamic.webwallet.enumcls.Transfer
+import io.usoamic.webwallet.enumcls.TransferType
 import io.usoamic.webwallet.exception.WalletNotFoundException
 import io.usoamic.webwallet.model.Account
 import io.usoamic.webwallet.other.Timestamp
@@ -37,7 +37,7 @@ abstract class WalletView(application: Application) : View(application) {
         } ?: throw WalletNotFoundException()
 
     protected val account get() = JSON.stringify(_account)
-    protected val address = _account.address.addPrefixIfNotExist()
+    protected val address = _account.address.addHexPrefixIfNotExist()
     protected val callOption = CallOption(address)
 
     init {
@@ -74,7 +74,7 @@ abstract class WalletView(application: Application) : View(application) {
 
     protected fun getTransactions(lastId: Long?, loadedLastId: Long, callback: (List<List<Any>>) -> Unit) {
         lastId?.let { lId ->
-            methods.getTransactionsByAddress(address, lId, loadedLastId) { list: MutableList<Transaction>, throwable: Throwable?, hasUpdate: Boolean ->
+            methods.getTransactionsByAddress(address, lId, loadedLastId) { list: MutableList<Transfer>, throwable: Throwable?, hasUpdate: Boolean ->
                 if(!hasUpdate) {
                     return@getTransactionsByAddress
                 }
@@ -92,10 +92,10 @@ abstract class WalletView(application: Application) : View(application) {
                             id,
                             txType.toPlainString(),
                             when (txType) {
-                                Transfer.DEPOSIT -> tx.from
-                                Transfer.WITHDRAWAL -> tx.to
-                                Transfer.INTERNAL -> address
-                                Transfer.UNKNOWN -> "N/A"
+                                TransferType.DEPOSIT -> tx.from
+                                TransferType.WITHDRAWAL -> tx.to
+                                TransferType.INTERNAL -> address
+                                TransferType.UNKNOWN -> "N/A"
                             },
                             Coin.fromSat(tx.value).toPlainString(),
                             Timestamp.fromBigNumber(tx.timestamp).toLocaleString()

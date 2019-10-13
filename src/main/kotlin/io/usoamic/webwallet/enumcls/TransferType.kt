@@ -1,6 +1,6 @@
 package io.usoamic.webwallet.enumcls
 
-enum class Transfer {
+enum class TransferType {
     DEPOSIT,
     WITHDRAWAL,
     INTERNAL,
