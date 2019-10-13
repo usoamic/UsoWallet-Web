@@ -43,6 +43,15 @@ kotlinFrontend {
         mode = 'development'
     }
 
+    npm {
+        dependency("bignumber.js", "^9.0.0")
+        dependency("datatables.net-bs4", "^1.10.19")
+        dependency("ethereumjs-wallet", "^0.6.3")
+        dependency("jquery", "^3.2.0-0")
+        dependency("toastr", "^2.1.4")
+        dependency("qrcode", "^1.4.1")
+    }
+
     define "PRODUCTION", false
     define "X", false
 }
