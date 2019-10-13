@@ -1,5 +1,5 @@
 buildscript {
-    ext.kotlin_version = '1.3.41'
+    ext.kotlin_version = '1.3.50'
 
     repositories {
         jcenter()
@@ -17,35 +17,39 @@ apply plugin: 'kotlin-dce-js'
 apply plugin: 'org.jetbrains.kotlin.frontend'
 
 group 'io.usoamic'
-version '1.0-SNAPSHOT'
+version '1.0.0'
 
 repositories {
     mavenCentral()
     maven { url "https://kotlin.bintray.com/js-externals" }
+    flatDir {
+        dirs 'libs'
+    }
 }
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-js"
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core-js:1.3.0'
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
     testImplementation "org.jetbrains.kotlin:kotlin-test-js"
 }
 
 kotlinFrontend {
     downloadNodeJsVersion = "latest"
 
-    npm {
-        dependency "web3", "^1.2.1"
-        dependency "toastr", "^2.1.4"
-        dependency "jquery", "^3.2.0-0"
-        dependency "bignumber.js", "^9.0.0"
-        dependency "ethereumjs-tx", "^2.1.0"
-        dependency "buffer", "^5.2.1"
-        dependency "ethereumjs-wallet", "0.6.3"
-    }
-
     webpackBundle {
         bundleName = "main"
         publicPath = file('src/main/html')
-        mode = 'production' //'development'
+        mode = 'development'
+    }
+
+    npm {
+        dependency("bignumber.js", "^9.0.0")
+        dependency("datatables.net-bs4", "^1.10.19")
+        dependency("ethereumjs-wallet", "^0.6.3")
+        dependency("jquery", "^3.2.0-0")
+        dependency("toastr", "^2.1.4")
+        dependency("qrcode", "^1.4.1")
     }
 
     define "PRODUCTION", false
@@ -53,17 +57,22 @@ kotlinFrontend {
 }
 
 compileKotlin2Js {
-    kotlinOptions.metaInfo = true
-    kotlinOptions.outputFile = "$project.buildDir.path/js/${project.name}.js"
-    kotlinOptions.sourceMap = false
-    kotlinOptions.moduleKind = 'commonjs'
-    kotlinOptions.main = "call"
+    kotlinOptions {
+        metaInfo = true
+        outputFile = "$project.buildDir.path/js/${project.name}.js"
+        sourceMap = false
+        moduleKind = 'commonjs'
+        main = "call"
+        suppressWarnings = false
+    }
 }
 
 compileTestKotlin2Js {
-    kotlinOptions.metaInfo = true
-    kotlinOptions.outputFile = "$project.buildDir.path/js-tests/${project.name}-tests.js"
-    kotlinOptions.sourceMap = true
-    kotlinOptions.moduleKind = 'commonjs'
-    kotlinOptions.main = "call"
+    kotlinOptions {
+        metaInfo = true
+        outputFile = "$project.buildDir.path/js-tests/${project.name}-tests.js"
+        sourceMap = true
+        moduleKind = 'commonjs'
+        main = "call"
+    }
 }
