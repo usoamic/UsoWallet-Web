@@ -36,11 +36,12 @@ dependencies {
 
 kotlinFrontend {
     downloadNodeJsVersion = "latest"
+    def isProduction = false
 
     webpackBundle {
-        bundleName = "main"
+        bundleName = isProduction ? "main.min" : "main"
         publicPath = file('src/main/html')
-        mode = 'development'
+        mode = isProduction ? 'production' : 'development'
     }
 
     npm {
@@ -52,7 +53,7 @@ kotlinFrontend {
         dependency("qrcode", "^1.4.1")
     }
 
-    define "PRODUCTION", false
+    define "PRODUCTION", isProduction
     define "X", false
 }
 
