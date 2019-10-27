@@ -38,12 +38,6 @@ kotlinFrontend {
     downloadNodeJsVersion = "latest"
     def isProduction = false
 
-    webpackBundle {
-        bundleName = isProduction ? "main.min" : "main"
-        publicPath = file('src/main/html')
-        mode = isProduction ? 'production' : 'development'
-    }
-
     npm {
         dependency("bignumber.js", "^9.0.0")
         dependency("datatables.net-bs4", "^1.10.19")
@@ -51,6 +45,12 @@ kotlinFrontend {
         dependency("jquery", "^3.2.0-0")
         dependency("toastr", "^2.1.4")
         dependency("qrcode", "^1.4.1")
+    }
+
+    webpackBundle {
+        bundleName = isProduction ? "main.min" : "main"
+        publicPath = file('src/main/html')
+        mode = isProduction ? 'production' : 'development'
     }
 
     define "PRODUCTION", isProduction
