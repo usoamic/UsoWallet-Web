@@ -1,22 +1,25 @@
 package io.usoamic.webwallet.view
 
+import io.usoamic.usoamicktjs.model.Account
 import io.usoamic.web3kt.util.extension.removeHexPrefixIfExist
+import io.usoamic.web3kt.wallet.Wallet
+import io.usoamic.web3kt.wallet.extension.fromPrivateKey
+import io.usoamic.web3kt.wallet.extension.toJsonString
 import io.usoamic.webwallet.base.Application
 import io.usoamic.webwallet.base.View
-import io.usoamic.webwallet.util.ValidateUtil
-import js.externals.jquery.jQuery
-import io.usoamic.web3kt.wallet.extension.fromPrivateKey
-import io.usoamic.web3kt.wallet.Wallet
+import io.usoamic.webwallet.enumcls.Page
 import io.usoamic.webwallet.util.Async
+import io.usoamic.webwallet.util.ValidateUtil
+import js.externals.jquery.JQuery
+import js.externals.jquery.extension.enable
+import js.externals.jquery.extension.onClick
+import js.externals.jquery.extension.startLoading
+import js.externals.jquery.extension.stopLoading
+import js.externals.jquery.jQuery
 import js.externals.toastr.extensions.error
 import js.externals.toastr.toastr
-import io.usoamic.web3kt.wallet.extension.toJsonString
-import kotlin.browser.localStorage
-import io.usoamic.usoamickotlinjs.other.Config
-import io.usoamic.webwallet.enumcls.Page
-import js.externals.jquery.JQuery
-import js.externals.jquery.extension.*
 import org.w3c.dom.HTMLElement
+import kotlin.browser.localStorage
 
 class AddWalletView(application: Application) : View(application) {
     override val view = jQuery("#add_wallet_view")
@@ -53,7 +56,7 @@ class AddWalletView(application: Application) : View(application) {
 
                 Async.launch {
                     val json = Wallet.fromPrivateKey(privateKey).toV3(password).toJsonString()
-                    localStorage.setItem(Config.ACCOUNT_FILENAME, json)
+                    localStorage.setItem(Account.ACCOUNT, json)
                     stopLoading()
                     application.openPage(Page.DASHBOARD)
                 }

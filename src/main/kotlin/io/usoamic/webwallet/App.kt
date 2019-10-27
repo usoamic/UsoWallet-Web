@@ -1,6 +1,6 @@
 package io.usoamic.webwallet
 
-import io.usoamic.usoamickotlinjs.other.Config
+import io.usoamic.usoamicktjs.model.Account
 import io.usoamic.web3kt.kt2js.require
 import io.usoamic.webwallet.base.Application
 import io.usoamic.webwallet.base.View
@@ -140,11 +140,11 @@ class App : Application {
     }
 
     override fun getWallet(): String? {
-        return localStorage.getItem(Config.ACCOUNT_FILENAME)
+        return localStorage.getItem(Account.ACCOUNT)
     }
 
     override fun setWallet(json: String) {
-        localStorage.setItem(Config.ACCOUNT_FILENAME, json)
+        localStorage.setItem(Account.ACCOUNT, json)
     }
 
     override fun showNavigationBar() {

@@ -1,6 +1,6 @@
 package io.usoamic.webwallet.view
 
-import io.usoamic.usoamickotlinjs.other.Config
+import io.usoamic.usoamicktjs.other.Contract
 import io.usoamic.web3kt.bignumber.BigNumber
 import io.usoamic.web3kt.bignumber.BigNumberValue
 import io.usoamic.web3kt.bignumber.extension.toBigNumber
@@ -16,6 +16,7 @@ import io.usoamic.web3kt.util.EthUnit
 import io.usoamic.web3kt.util.extension.addHexPrefix
 import io.usoamic.web3kt.util.extension.removeHexPrefixIfExist
 import io.usoamic.web3kt.wallet.Wallet
+import io.usoamic.webwallet.WalletConfig
 import io.usoamic.webwallet.base.Application
 import io.usoamic.webwallet.base.WalletView
 import io.usoamic.webwallet.enumcls.Asset
@@ -67,7 +68,6 @@ class WithdrawView(application: Application) : WalletView(application) {
                 withdrawEthBtn.disable()
             }
         }
-
     }
 
     private fun stopLoading(asset: Asset) {
@@ -158,7 +158,7 @@ class WithdrawView(application: Application) : WalletView(application) {
                             address,
                             nonce,
                             BigNumber(gasLimit),
-                            Config.CONTRACT_ADDRESS,
+                            Contract.forNetwork(WalletConfig.NETWORK),
                             response.encodeABI()
                         )
                         sendTransaction(Asset.TOKEN, transaction, sPassword)

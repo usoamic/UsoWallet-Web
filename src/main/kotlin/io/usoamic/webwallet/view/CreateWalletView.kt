@@ -1,15 +1,15 @@
 package io.usoamic.webwallet.view
 
+import io.usoamic.web3kt.wallet.Wallet
 import io.usoamic.webwallet.base.Application
 import io.usoamic.webwallet.base.View
-import js.externals.jquery.extension.onClick
-import js.externals.jquery.jQuery
-import io.usoamic.web3kt.wallet.Wallet
 import io.usoamic.webwallet.enumcls.Page
 import io.usoamic.webwallet.util.Async
 import js.externals.jquery.JQuery
+import js.externals.jquery.extension.onClick
 import js.externals.jquery.extension.removeHidden
 import js.externals.jquery.extension.showLoading
+import js.externals.jquery.jQuery
 import org.w3c.dom.HTMLElement
 
 class CreateWalletView(application: Application) : View(application) {
