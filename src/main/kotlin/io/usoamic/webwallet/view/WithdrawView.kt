@@ -16,7 +16,7 @@ import io.usoamic.web3kt.util.EthUnit
 import io.usoamic.web3kt.util.extension.addHexPrefix
 import io.usoamic.web3kt.util.extension.removeHexPrefixIfExist
 import io.usoamic.web3kt.wallet.Wallet
-import io.usoamic.webwallet.WalletConfig
+import io.usoamic.webwallet.AppConfig
 import io.usoamic.webwallet.base.Application
 import io.usoamic.webwallet.base.WalletView
 import io.usoamic.webwallet.enumcls.Asset
@@ -158,7 +158,7 @@ class WithdrawView(application: Application) : WalletView(application) {
                             address,
                             nonce,
                             BigNumber(gasLimit),
-                            Contract.forNetwork(WalletConfig.NETWORK),
+                            Contract.forNetwork(AppConfig.NETWORK),
                             response.encodeABI()
                         )
                         sendTransaction(Asset.TOKEN, transaction, sPassword)

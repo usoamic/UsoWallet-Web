@@ -13,7 +13,7 @@ import io.usoamic.web3kt.core.extension.newContract
 import io.usoamic.web3kt.tx.block.DefaultBlockParameterName
 import io.usoamic.web3kt.util.EthUnit
 import io.usoamic.web3kt.util.extension.addHexPrefixIfNotExist
-import io.usoamic.webwallet.WalletConfig
+import io.usoamic.webwallet.AppConfig
 import io.usoamic.webwallet.enumcls.Page
 import io.usoamic.webwallet.enumcls.TransferType
 import io.usoamic.webwallet.exception.WalletNotFoundException
@@ -26,8 +26,8 @@ import kotlin.browser.localStorage
 import io.usoamic.usoamicktjs.model.Account as AccountData
 
 abstract class WalletView(application: Application) : View(application) {
-    protected val web3 = Web3(Node.by(WalletConfig.NETWORK, WalletConfig.NODE_PROVIDER))
-    private val contract = web3.newContract<Usoamic>(WalletConfig.ABI, Contract.forNetwork(WalletConfig.NETWORK))
+    protected val web3 = Web3(Node.by(AppConfig.NETWORK, AppConfig.NODE_PROVIDER))
+    private val contract = web3.newContract<Usoamic>(AppConfig.ABI, Contract.forNetwork(AppConfig.NETWORK))
     protected val methods = contract.methods
 
     private val logoutBtn = jQuery("#logout")
