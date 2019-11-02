@@ -91,7 +91,7 @@ class App : Application {
             is HistoryView -> "History"
             else -> ""
         }
-        window.document.title = "UsoWallet" + (if(pageTitle.isNotEmpty()) " - $pageTitle" else "")
+        window.document.title = "Usoamic Wallet" + (if(pageTitle.isNotEmpty()) " - $pageTitle" else "")
     }
 
     private fun onHashChange() {
