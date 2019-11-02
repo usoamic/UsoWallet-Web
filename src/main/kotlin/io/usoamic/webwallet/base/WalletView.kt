@@ -73,9 +73,9 @@ abstract class WalletView(application: Application) : View(application) {
             }
     }
 
-    protected fun getTransactions(lastId: Long?, loadedLastId: Long, callback: (List<List<Any>>) -> Unit) {
-        lastId?.let { lId ->
-            methods.getTransactionsByAddress(address, lId, loadedLastId) { list: MutableList<Transfer>, throwable: Throwable?, hasUpdate: Boolean ->
+    protected fun getTransactions(maxTx: Long?, loadedLastId: Long, callback: (List<List<Any>>) -> Unit) {
+        maxTx?.let { mId ->
+            methods.getTransactionsByAddress(address, mId, loadedLastId) { list: MutableList<Transfer>, throwable: Throwable?, hasUpdate: Boolean ->
                 if(!hasUpdate) {
                     return@getTransactionsByAddress
                 }
