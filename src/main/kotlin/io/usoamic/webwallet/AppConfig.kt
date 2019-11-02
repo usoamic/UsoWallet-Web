@@ -7,6 +7,6 @@ import io.usoamic.usoamicktjs.other.Config
 object AppConfig {
     const val ABI = Config.ABI
 
-    val NETWORK = NetworkType.TESTNET
+    val NETWORK = NetworkType.MAINNET
     val NODE_PROVIDER = NodeProvider.INFURA
 }
