@@ -30,12 +30,13 @@ main > .row > div > .card > i {
     color: white;
 }
 
-h6 {
-    color: #FF9933 !important;
+.input-group-text i {
+    align-content: center;
+    width: 30px;
 }
 
-text {
-    color: #3498db !important;
+.card > h6 {
+    color: #FF9933 !important;
 }
 
 .navbar .navbar-nav > li.active {
