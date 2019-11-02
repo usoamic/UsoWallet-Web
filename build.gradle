@@ -36,15 +36,17 @@ dependencies {
 
 kotlinFrontend {
     downloadNodeJsVersion = "latest"
-    def isProduction = false
+    def isProduction = true
 
     npm {
         dependency("bignumber.js", "^9.0.0")
         dependency("datatables.net-bs4", "^1.10.19")
         dependency("ethereumjs-wallet", "^0.6.3")
-        dependency("jquery", "^3.2.0-0")
+        dependency("jquery", "^3.3.1")
         dependency("toastr", "^2.1.4")
         dependency("qrcode", "^1.4.1")
+        dependency("bootstrap", "^4.1.0")
+        dependency("popper.js", "^1.16.0")
     }
 
     webpackBundle {
