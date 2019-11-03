@@ -1,1 +1,1 @@
-config.output.path = "C:\\Users\\Admin\\IdeaProjects\\webwallet\\src\\main\\html\\js"
+config.output.path = "C:\\Users\\Admin\\IdeaProjects\\UsoWallet-Web\\src\\main\\html\\js"
