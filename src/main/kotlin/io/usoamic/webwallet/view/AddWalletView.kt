@@ -53,6 +53,7 @@ class AddWalletView(application: Application) : View(application) {
                 ValidateUtil.validatePrivateKey(privateKey)
                     .validatePassword(password)
                     .validateConfirmPassword(confirmPassword)
+                    .validatePasswords(password, confirmPassword)
 
                 Async.launch {
                     val json = Wallet.fromPrivateKey(privateKey).toV3(password).toJsonString()

@@ -35,6 +35,12 @@ class ValidateUtil {
             }
         }
 
+        fun validatePasswords(password: String, confirmPassword: String) {
+            if(password != confirmPassword) {
+                throw ValidateUtilException("Passwords don't match")
+            }
+        }
+
         fun validateAddress(address: String) = apply {
             validateThatNotEmpty(address, "Address Required")
             if(!EthereumUtils.isValidAddress(address)) {
