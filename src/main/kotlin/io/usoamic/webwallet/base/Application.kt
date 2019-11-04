@@ -5,6 +5,7 @@ import io.usoamic.webwallet.enumcls.Page
 interface Application {
     var currentView: View
     fun onStart()
+    fun runLoader()
     fun startLoading()
     fun stopLoading()
     fun open(view: View)

@@ -32,6 +32,10 @@ class App : Application {
         stopLoading()
     }
 
+    override fun runLoader() {
+        loader.fadeIn()
+    }
+
     override fun startLoading() {}
 
     override fun stopLoading() {
