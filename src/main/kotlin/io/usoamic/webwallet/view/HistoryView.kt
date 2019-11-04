@@ -1,5 +1,6 @@
 package io.usoamic.webwallet.view
 
+import io.usoamic.webwallet.AppConfig
 import io.usoamic.webwallet.base.Application
 import io.usoamic.webwallet.base.WalletView
 import js.externals.datatables.net.JQueryDataTable
@@ -13,7 +14,7 @@ class HistoryView(application: Application) : WalletView(application) {
     override val view = jQuery("#history_view")
     override val navBarItem: JQuery<HTMLElement>? = jQuery("#history_item")
     private val historyTable = jQuery("#history").unsafeCast<JQueryDataTable>()
-    private var numberOfItems: Long = 0
+    private var lastTxId: Long = 0
 
     init {
         prepareHistory()
@@ -24,9 +25,9 @@ class HistoryView(application: Application) : WalletView(application) {
     }
 
     override fun onRefresh() {
-        getTransactions(500, numberOfItems) {
-            numberOfItems = it.size.toLong()
-            historyTable.dataTable(DataTableOption(it))
+        getTransactions(AppConfig.NUMBER_OF_HISTORY_TRANSFERS, lastTxId) { list: List<List<Any>>, ltId: Long ->
+            lastTxId = ltId
+            historyTable.dataTable(DataTableOption(list))
         }
     }
 

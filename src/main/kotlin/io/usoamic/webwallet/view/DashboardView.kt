@@ -1,6 +1,7 @@
 package io.usoamic.webwallet.view
 
 import io.usoamic.web3kt.core.contract.util.Coin
+import io.usoamic.webwallet.AppConfig
 import io.usoamic.webwallet.base.Application
 import io.usoamic.webwallet.base.WalletView
 import js.externals.datatables.net.JQueryDataTable
@@ -19,7 +20,7 @@ class DashboardView(application: Application) : WalletView(application) {
     private val usoBalance = jQuery("#uso_balance")
     private val ethHeight = jQuery("#eth_height")
     private val usoSupply = jQuery("#uso_supply")
-    private var numberOfLastTransfers: Long = 0
+    private var lastTransferId: Long = 0
 
 
     init {
@@ -71,9 +72,9 @@ class DashboardView(application: Application) : WalletView(application) {
     }
 
     private fun refreshLastTransfers() {
-        getTransactions(10, numberOfLastTransfers) {
-            numberOfLastTransfers = it.size.toLong()
-            lastTransfersTable.dataTable(DataTableOption(data = it))
+        getTransactions(AppConfig.NUMBER_OF_DASHBOARD_TRANSFERS, lastTransferId) { list: List<List<Any>>, ltId: Long ->
+            lastTransferId = ltId
+            lastTransfersTable.dataTable(DataTableOption(list))
         }
     }
 
