@@ -1,7 +1,6 @@
 package io.usoamic.webwallet.view
 
 import io.usoamic.usoamicktjs.other.Contract
-import io.usoamic.web3kt.bignumber.BigNumber
 import io.usoamic.web3kt.bignumber.BigNumberValue
 import io.usoamic.web3kt.bignumber.extension.toBigNumber
 import io.usoamic.web3kt.buffer.Buffer
@@ -13,7 +12,7 @@ import io.usoamic.web3kt.tx.Tx
 import io.usoamic.web3kt.tx.block.DefaultBlockParameterName
 import io.usoamic.web3kt.tx.model.RawTransaction
 import io.usoamic.web3kt.util.EthUnit
-import io.usoamic.web3kt.util.extension.addHexPrefix
+import io.usoamic.web3kt.util.extension.addHexPrefixIfNotExist
 import io.usoamic.web3kt.util.extension.removeHexPrefixIfExist
 import io.usoamic.web3kt.wallet.Wallet
 import io.usoamic.webwallet.AppConfig
@@ -58,6 +57,7 @@ class WithdrawView(application: Application) : WalletView(application) {
     }
 
     private fun startLoading(asset: Asset) {
+        passwordInput.clearVal()
         when(asset) {
             Asset.COIN -> {
                 withdrawUsoBtn.disable()
@@ -126,7 +126,7 @@ class WithdrawView(application: Application) : WalletView(application) {
                         val transaction = RawTransaction.createEtherTransaction(
                             address,
                             nonce,
-                            BigNumber(gasLimit),
+                            gasLimit,
                             sAddress,
                             value
                         )
@@ -157,7 +157,7 @@ class WithdrawView(application: Application) : WalletView(application) {
                         val transaction = RawTransaction.createContractTransaction(
                             address,
                             nonce,
-                            BigNumber(gasLimit),
+                            gasLimit,
                             Contract.forNetwork(AppConfig.NETWORK),
                             response.encodeABI()
                         )
@@ -170,7 +170,6 @@ class WithdrawView(application: Application) : WalletView(application) {
             .catch {
                 onException(it)
             }
-
     }
 
     private fun sendTransaction(asset: Asset, transaction: RawTransaction, password: String) {
@@ -180,7 +179,7 @@ class WithdrawView(application: Application) : WalletView(application) {
         tx.sign(Buffer.fromHex(privateKey))
 
         val signedTransaction = tx.serialize()
-        web3.eth.sendSignedTransaction(signedTransaction.toHex().addHexPrefix())
+        web3.eth.sendSignedTransaction(signedTransaction.toHex().addHexPrefixIfNotExist())
             .then {
                 Alert.show(it.transactionHash)
                 stopLoading(asset)
@@ -192,7 +191,7 @@ class WithdrawView(application: Application) : WalletView(application) {
 
     override fun onStop() {
         super.onStop()
-        listOf(addressInput, amountInput).forEach {
+        listOf(addressInput, amountInput, passwordInput).forEach {
             it.clearContent()
         }
     }
