@@ -9,7 +9,6 @@ npm ERR! fatal: 'submodule' appears to be a git command, but we were not
 npm ERR! able to execute it. Maybe git-submodule is broken?
 npm ERR! 
 ```
-
 A: 
 ```shell script
 cd build
