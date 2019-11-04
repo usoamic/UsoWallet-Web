@@ -23,6 +23,7 @@ import io.usoamic.webwallet.util.TxUtils
 import js.externals.jquery.extension.onClick
 import js.externals.jquery.jQuery
 import kotlin.browser.localStorage
+import kotlin.browser.window
 import io.usoamic.usoamicktjs.model.Account as AccountData
 
 abstract class WalletView(application: Application) : View(application) {
@@ -48,8 +49,9 @@ abstract class WalletView(application: Application) : View(application) {
 
     private fun setListeners() {
         logoutBtn.onClick {
+            application.runLoader()
             localStorage.removeItem(AccountData.ACCOUNT)
-            application.openPage(Page.FIRST)
+            window.location.href = "index.html"
         }
     }
 
