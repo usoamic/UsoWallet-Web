@@ -164,6 +164,7 @@ class App : Application {
         require("bootstrap")
         require("jquery")
         require("popper.js")
+        require("babel-polyfill")
     }
 }
 
