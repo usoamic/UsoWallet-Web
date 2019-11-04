@@ -84,13 +84,12 @@ abstract class WalletView(application: Application) : View(application) {
                     return@getTransactionsByAddress
                 }
                 val txList = mutableListOf<List<Any>>()
-                var id = list.size
 
-                list.forEach { tx ->
+                list.forEachIndexed { index, tx ->
                     val txType = TxUtils.getTxType(address, tx.from, tx.to)
                     txList.add(
                         listOf(
-                            id,
+                            index + 1,
                             txType.toPlainString(),
                             when (txType) {
                                 TransferType.DEPOSIT -> tx.from
@@ -102,7 +101,6 @@ abstract class WalletView(application: Application) : View(application) {
                             Timestamp.fromBigNumber(tx.timestamp).toLocaleString()
                         )
                     )
-                    id--
                 }
                 callback(txList)
             }
