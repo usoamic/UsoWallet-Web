@@ -1,6 +1,6 @@
 package io.usoamic.webwallet
 
-import io.usoamic.usoamickotlinjs.other.Config
+import io.usoamic.usoamicktjs.model.Account
 import io.usoamic.web3kt.kt2js.require
 import io.usoamic.webwallet.base.Application
 import io.usoamic.webwallet.base.View
@@ -91,7 +91,7 @@ class App : Application {
             is HistoryView -> "History"
             else -> ""
         }
-        window.document.title = "UsoWallet" + (if(pageTitle.isNotEmpty()) " - $pageTitle" else "")
+        window.document.title = "Usoamic Wallet" + (if(pageTitle.isNotEmpty()) " - $pageTitle" else "")
     }
 
     private fun onHashChange() {
@@ -140,11 +140,11 @@ class App : Application {
     }
 
     override fun getWallet(): String? {
-        return localStorage.getItem(Config.ACCOUNT_FILENAME)
+        return localStorage.getItem(Account.ACCOUNT)
     }
 
     override fun setWallet(json: String) {
-        localStorage.setItem(Config.ACCOUNT_FILENAME, json)
+        localStorage.setItem(Account.ACCOUNT, json)
     }
 
     override fun showNavigationBar() {
@@ -161,6 +161,10 @@ class App : Application {
 
     override fun loadDependency() {
         require("datatables.net-bs4")
+        require("bootstrap")
+        require("jquery")
+        require("popper.js")
+        require("babel-polyfill")
     }
 }
 

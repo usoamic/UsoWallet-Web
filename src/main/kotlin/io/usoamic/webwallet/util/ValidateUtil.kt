@@ -1,9 +1,9 @@
 package io.usoamic.webwallet.util
 
-import io.usoamic.web3kt.util.EthereumUtils
-import io.usoamic.webwallet.exception.ValidateUtilException
 import io.usoamic.web3kt.bignumber.BigNumber
 import io.usoamic.web3kt.bignumber.BigNumberValue
+import io.usoamic.web3kt.util.EthereumUtils
+import io.usoamic.webwallet.exception.ValidateUtilException
 
 class ValidateUtil {
     companion object {
@@ -32,6 +32,12 @@ class ValidateUtil {
 
             if(!EthereumUtils.isValidPrivateKey(privateKey)) {
                 throw ValidateUtilException("Invalid Private Key")
+            }
+        }
+
+        fun validatePasswords(password: String, confirmPassword: String) {
+            if(password != confirmPassword) {
+                throw ValidateUtilException("Passwords don't match")
             }
         }
 

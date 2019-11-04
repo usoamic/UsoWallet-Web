@@ -26,8 +26,6 @@ class Timestamp private constructor(number: BigNumber) {
     }
 
     fun toLocaleString(): String {
-
-
         return toDate().toLocaleString("es")
     }
 

@@ -23,7 +23,7 @@ class DepositView(application: Application) : WalletView(application) {
 
     private fun prepareQrCode() {
         qrAddress?.let { el ->
-            QRCode.toCanvas(el, "Q", QRCodeOptions(scale = 8)) { err ->
+            QRCode.toCanvas(el, address, QRCodeOptions(scale = 8)) { err ->
                 onError(err)
             }
         }

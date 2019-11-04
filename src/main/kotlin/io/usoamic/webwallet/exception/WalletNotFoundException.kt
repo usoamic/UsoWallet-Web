@@ -1,4 +1,3 @@
 package io.usoamic.webwallet.exception
 
-class WalletNotFoundException : Throwable() {
-}
+class WalletNotFoundException : Throwable()

@@ -1,5 +1,6 @@
 body {
     padding-top: 4rem;
+    color: #663333 !important;
 }
 
 main > .row > div > .card > i {
@@ -7,15 +8,43 @@ main > .row > div > .card > i {
 }
 
 .custom-bg {
-    background: #ddd9d9;
+    background: #FFFFCC;
+}
+
+.navbar-dark {
+    background-color: #663333 !important;
+}
+
+.btn.btn-primary {
+    background-color: #FF0000;
+    border-color: #FF0000;
+}
+
+.btn.btn-primary:hover {
+    background-color: #FF9933 !important;
+    border-color: #FF9933 !important;
+}
+
+.input-group-text {
+    background-color: #FF9933;
+    color: white;
+}
+
+.input-group-text i {
+    align-content: center;
+    width: 30px;
+}
+
+.card > h6 {
+    color: #FF9933 !important;
 }
 
 .navbar .navbar-nav > li.active {
-    background-color: green;
+    background-color: #FF0000;
 }
 
 .navbar .navbar-nav > li > a:hover {
-    background-color: greenyellow;
+    background-color: #FF9933;
     color: white;
 }
 
@@ -105,8 +134,8 @@ main > .row > div > .card > i {
     position: absolute;
     left: calc(50% - 30px);
     top: calc(50% - 60px);
-    border: 8px solid #f3f3f3;
-    border-top: 8px solid #3498db;
+    border: 8px solid #461616;
+    border-top: 8px solid #FF9933;
     border-radius: 50%;
     width: 60px;
     height: 60px;
@@ -121,6 +150,10 @@ main > .row > div > .card > i {
 .table td,
 .table th {
     text-align: center;
+}
+
+.table-striped > tbody > tr:nth-child(2n+1) > td, .table-striped > tbody > tr:nth-child(2n+1) > th {
+    background-color: #FFCC99;
 }
 
 table tbody td a {
@@ -165,4 +198,17 @@ html.login_page body nav {
     .fs-md-reduce-2 {
         font-size: 0.8em;
     }
+}
+
+div.dataTables_wrapper {
+    color: #663333;
+}
+div.dataTables_wrapper div.dataTables_paginate ul.pagination .page-item .page-link {
+    color: #663333 !important;
+}
+
+div.dataTables_wrapper div.dataTables_paginate ul.pagination .page-item.active .page-link {
+    background-color: #FF0000 !important;
+    border-color: #FF0000 !important;
+    color: white !important;
 }
