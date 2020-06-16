@@ -187,8 +187,8 @@ html.login_page body nav {
     display: none;
 }
 
-.height_315px {
-    height: 315px
+.height_withdraw {
+    height: 365px
 }
 
 @media only screen and (min-width: 768px) and (max-width: 992px) {

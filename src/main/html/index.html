@@ -9,10 +9,13 @@
     <title>Usoamic Wallet</title>
 
     <!-- Bootstrap core CSS -->
-    <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css"
+          href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap4.min.css"/>
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css"/>
+    <link rel="stylesheet" type="text/css"
+          href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css"/>
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css"/>
 
     <!-- Custom styles for this template -->
@@ -24,7 +27,7 @@
 </div>
 <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top" role="navigation">
     <div class="container">
-        <a class="navbar-brand" href="#">Usoamic Wallet</a>
+        <a class="navbar-brand" href="#">Usoamic Wallet <sup>v1.1.2</sup></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarMenu"
                 aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -217,7 +220,7 @@
     <div id="withdraw_view" class="hidden">
         <div class="row">
             <div class="col-md-12">
-                <div class="card box-shadow my-3 height_315px">
+                <div class="card box-shadow my-3 height_withdraw">
                     <h6 class="border-bottom border-gray p-3">Withdraw</h6>
                     <div class="card-body">
                         <div class="form-group">
@@ -237,6 +240,24 @@
                                 <input type="text" id="withdraw_amount_input" class="form-control" placeholder="Amount">
                             </div>
                         </div>
+
+                        <div class="form-group">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text"><i class="fa fa-eraser"></i></div>
+                                </div>
+                                <select class="custom-select" id="gas_price_input">
+                                    <option value="auto" selected>Auto Gas Price</option>
+                                    <option value="125">95 Gwei</option>
+                                    <option value="100">80 Gwei</option>
+                                    <option value="75">65 Gwei</option>
+                                    <option value="50">50 Gwei</option>
+                                    <option value="35">35 Gwei</option>
+                                    <option value="20">20 Gwei</option>
+                                </select>
+                            </div>
+                        </div>
+
                         <div class="form-group">
                             <div class="input-group">
                                 <div class="input-group-prepend">
@@ -249,8 +270,10 @@
 
                         <div class="form-group float-right">
                             <div class="dropdown">
-                                <button type="button" class="btn btn-primary" id="withdraw_eth_button">Withdraw ETH</button>
-                                <button type="button" class="btn btn-primary" id="withdraw_uso_button">Withdraw USO</button>
+                                <button type="button" class="btn btn-primary" id="withdraw_eth_button">Withdraw ETH
+                                </button>
+                                <button type="button" class="btn btn-primary" id="withdraw_uso_button">Withdraw USO
+                                </button>
                             </div>
                         </div>
                     </div>
