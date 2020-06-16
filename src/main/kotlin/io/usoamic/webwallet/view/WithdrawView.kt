@@ -1,7 +1,6 @@
 package io.usoamic.webwallet.view
 
 import io.usoamic.usoamicktjs.other.Contract
-import io.usoamic.web3kt.bignumber.BigNumber
 import io.usoamic.web3kt.bignumber.BigNumberValue
 import io.usoamic.web3kt.bignumber.extension.toBigNumber
 import io.usoamic.web3kt.buffer.Buffer
@@ -21,6 +20,7 @@ import io.usoamic.webwallet.AppConfig
 import io.usoamic.webwallet.base.Application
 import io.usoamic.webwallet.base.WalletView
 import io.usoamic.webwallet.enumcls.Asset
+import io.usoamic.webwallet.enumcls.WithdrawLoadingStatus
 import io.usoamic.webwallet.exception.ValidateUtilException
 import io.usoamic.webwallet.model.TxData
 import io.usoamic.webwallet.util.Alert
@@ -44,11 +44,6 @@ class WithdrawView(application: Application) : WalletView(application) {
 
     init {
         setListeners()
-
-        web3.eth.getGasPrice()
-            .then { gasPrice ->
-                println("gasPrice: $gasPrice")
-            }.catch(::onException)
     }
 
     private fun setListeners() {
@@ -113,14 +108,12 @@ class WithdrawView(application: Application) : WalletView(application) {
                 .validatePassword(sPassword)
 
             startLoading(asset)
-            println("Start Loading...")
             web3.eth.getTransactionCount(address, DefaultBlockParameterName.LATEST)
                 .then { nonce ->
-                    println("Get Transaction Count...")
+                    changeLoadingText(asset, WithdrawLoadingStatus.GAS_PRICE)
                     if (sGasPrice == "auto") {
                         web3.eth.getGasPrice()
                             .then { gasPrice ->
-                                println("Get Gas Price...")
                                 sendWith(
                                     TxData(
                                         nonce = nonce,
@@ -165,7 +158,7 @@ class WithdrawView(application: Application) : WalletView(application) {
     private fun sendWith(
         data: TxData
     ) {
-        println("SendWithGasPrice: ${data.gasPrice}")
+        changeLoadingText(data.asset, WithdrawLoadingStatus.GAS_LIMIT)
         when (data.asset) {
             Asset.COIN -> sendEth(data)
             Asset.TOKEN -> sendUso(data)
@@ -184,7 +177,6 @@ class WithdrawView(application: Application) : WalletView(application) {
             )
         )
             .then { gasLimit ->
-                println("Get Gas Limit...")
                 val transaction = RawTransaction.createEtherTransaction(
                     from = address,
                     nonce = data.nonce,
@@ -211,7 +203,6 @@ class WithdrawView(application: Application) : WalletView(application) {
             )
         )
             .then { gasLimit ->
-                println("Get Gas Limit...")
                 val transaction = RawTransaction.createContractTransaction(
                     from = address,
                     nonce = data.nonce,
@@ -226,20 +217,38 @@ class WithdrawView(application: Application) : WalletView(application) {
     }
 
     private fun sendTransaction(asset: Asset, transaction: RawTransaction, password: String) {
-        println("Signing...")
+        changeLoadingText(asset, WithdrawLoadingStatus.SIGNING)
+
         val privateKey = Wallet.fromV3(account, password).getPrivateKeyAsString().removeHexPrefixIfExist()
         val tx = Tx(transaction)
         tx.sign(Buffer.fromHex(privateKey))
 
         val signedTransaction = tx.serialize()
-        println("Sending...")
+        changeLoadingText(asset, WithdrawLoadingStatus.WITHDRAWING)
         web3.eth.sendSignedTransaction(signedTransaction.toHex().addHexPrefixIfNotExist())
             .then {
-                println("Sent!")
                 Alert.show(it.transactionHash)
                 stopLoading(asset)
             }
             .catch(::onException)
+    }
+
+    private fun changeLoadingText(asset: Asset, status: WithdrawLoadingStatus) {
+        val currentBtn = when(asset) {
+            Asset.COIN -> {
+                withdrawEthBtn
+            }
+            Asset.TOKEN -> {
+                withdrawUsoBtn
+            }
+        }
+        val message = when(status) {
+            WithdrawLoadingStatus.GAS_PRICE -> "Loading Gas Price"
+            WithdrawLoadingStatus.GAS_LIMIT -> "Gas estimating"
+            WithdrawLoadingStatus.SIGNING -> "Signing"
+            WithdrawLoadingStatus.WITHDRAWING -> "Withdrawing"
+        }
+        currentBtn.changeLoadingText(message)
     }
 
     override fun onStop() {
