@@ -158,7 +158,7 @@ class WithdrawView(application: Application) : WalletView(application) {
     private fun sendWith(
         data: TxData
     ) {
-        changeLoadingText(data.asset, WithdrawLoadingStatus.GAS_LIMIT)
+        changeLoadingText(data.asset, WithdrawLoadingStatus.SIGNING)
         when (data.asset) {
             Asset.COIN -> sendEth(data)
             Asset.TOKEN -> sendUso(data)
@@ -217,8 +217,6 @@ class WithdrawView(application: Application) : WalletView(application) {
     }
 
     private fun sendTransaction(asset: Asset, transaction: RawTransaction, password: String) {
-        changeLoadingText(asset, WithdrawLoadingStatus.SIGNING)
-
         val privateKey = Wallet.fromV3(account, password).getPrivateKeyAsString().removeHexPrefixIfExist()
         val tx = Tx(transaction)
         tx.sign(Buffer.fromHex(privateKey))
@@ -244,7 +242,6 @@ class WithdrawView(application: Application) : WalletView(application) {
         }
         val message = when(status) {
             WithdrawLoadingStatus.GAS_PRICE -> "Loading Gas Price"
-            WithdrawLoadingStatus.GAS_LIMIT -> "Gas estimating"
             WithdrawLoadingStatus.SIGNING -> "Signing"
             WithdrawLoadingStatus.WITHDRAWING -> "Withdrawing"
         }
