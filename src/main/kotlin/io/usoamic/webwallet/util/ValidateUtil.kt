@@ -6,6 +6,7 @@ import io.usoamic.web3kt.util.EthereumUtils
 import io.usoamic.webwallet.exception.ValidateUtilException
 
 class ValidateUtil {
+    //TODO: Replace to https://github.com/usoamic/validateutilkt
     companion object {
         fun validatePassword(password: String) = apply {
             validateThatNotEmpty(password, "Password Required")

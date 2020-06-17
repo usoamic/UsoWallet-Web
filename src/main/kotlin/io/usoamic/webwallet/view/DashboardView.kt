@@ -52,9 +52,7 @@ class DashboardView(application: Application) : WalletView(application) {
             .then {
                 ethHeight.text(it.toString())
             }
-            .catch {
-                onException(it)
-            }
+            .catch(::onException)
     }
 
     private fun refreshUsoSupply() {
@@ -62,9 +60,7 @@ class DashboardView(application: Application) : WalletView(application) {
             .then {
                 usoSupply.text(Coin.fromSat(it).toMillion())
             }
-            .catch {
-                onException(it)
-            }
+            .catch(::onException)
     }
 
     private fun prepareLastTransfers() {

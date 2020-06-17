@@ -60,9 +60,7 @@ abstract class WalletView(application: Application) : View(application) {
             .then {
                 callback(web3.utils.fromWei(it, EthUnit.ETHER).toBigNumber().toPrecision(5).toString())
             }
-            .catch {
-                onException(it)
-            }
+            .catch(::onException)
     }
 
     protected fun getUsoBalance(callback: (Coin) -> Unit) {
@@ -70,9 +68,7 @@ abstract class WalletView(application: Application) : View(application) {
             .then {
                 callback(Coin.fromSat(it))
             }
-            .catch {
-                onException(it)
-            }
+            .catch(::onException)
     }
 
     protected fun getTransactions(maxTx: Long?, loadedLastId: Long, callback: (list: List<List<Any>>, lastTxId: Long) -> Unit) {
