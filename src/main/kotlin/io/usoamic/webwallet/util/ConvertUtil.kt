@@ -19,6 +19,10 @@ class ConvertUtil {
             return Web3.utils.fromWei(wei, EthUnit.ETHER).toBigNumber()
         }
 
+        fun convertWeiToEth(wei: String): BigNumber {
+            return Web3.utils.fromWei(wei, EthUnit.ETHER).toBigNumber()
+        }
+
         fun convertWeiToEthAsString(wei: String): String {
             return Web3.utils.fromWei(wei, EthUnit.ETHER)
         }
