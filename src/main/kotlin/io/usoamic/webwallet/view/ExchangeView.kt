@@ -60,7 +60,7 @@ class ExchangeView(application: Application) : TransactionView(application) {
 
     private fun setPrice(price: String) {
         priceInput.`val`(
-            convertWeiToEth(price).multipliedBy(Coin.SAT_PER_COIN).toString()
+            convertWeiToEth(price).multipliedBy(Coin.SAT_PER_COIN).toFixed(8).toString()
         )
     }
 
