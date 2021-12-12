@@ -9,7 +9,7 @@ object AppConfig {
     const val NUMBER_OF_DASHBOARD_TRANSFERS = 10L
     const val NUMBER_OF_HISTORY_TRANSFERS = 30L
 
-    const val DEBUG = true
+    const val DEBUG = false
 
     val NETWORK = NetworkType.MAINNET
     val NODE_PROVIDER = NodeProvider.INFURA
