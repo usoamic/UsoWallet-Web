@@ -10,7 +10,7 @@ import io.usoamic.webwallet.enumcls.TransactionExecutionStatus
 import io.usoamic.webwallet.exception.ValidateUtilException
 import io.usoamic.webwallet.model.ExchangeTxData
 import io.usoamic.webwallet.util.Alert
-import io.usoamic.webwallet.util.ConvertUtil
+import io.usoamic.webwallet.util.ConvertUtil.Companion.convertWeiToEth
 import io.usoamic.webwallet.util.ValidateUtil
 import js.externals.jquery.JQuery
 import js.externals.jquery.extension.*
@@ -59,7 +59,9 @@ class ExchangeView(application: Application) : TransactionView(application) {
     }
 
     private fun setPrice(price: String) {
-        priceInput.`val`(ConvertUtil.convertWeiToEthAsString(price))
+        priceInput.`val`(
+            convertWeiToEth(price).multipliedBy(Coin.SAT_PER_COIN).toString()
+        )
     }
 
     private fun setListeners() {
