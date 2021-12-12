@@ -59,7 +59,7 @@ dependencies {
     implementation(npm("bootstrap", "^4.6.1"))
     implementation(npm("popper.js", "^1.16.0"))
 
-    testImplementation(kotlin("kotlin-test-js"))
+    testImplementation(kotlin("test-js"))
 }
 
 kotlin.js().browser {}
