@@ -22,8 +22,8 @@ import io.usoamic.webwallet.other.Timestamp
 import io.usoamic.webwallet.util.TxUtils
 import js.externals.jquery.extension.onClick
 import js.externals.jquery.jQuery
-import kotlin.browser.localStorage
-import kotlin.browser.window
+import kotlinx.browser.localStorage
+import kotlinx.browser.window
 import io.usoamic.usoamicktjs.model.Account as AccountData
 
 abstract class WalletView(application: Application) : View(application) {
