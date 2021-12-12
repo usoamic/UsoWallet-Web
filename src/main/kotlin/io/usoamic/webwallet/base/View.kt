@@ -1,5 +1,6 @@
 package io.usoamic.webwallet.base
 
+import io.usoamic.webwallet.AppConfig
 import js.externals.jquery.JQuery
 import js.externals.jquery.extension.clearText
 import js.externals.jquery.extension.clearVal
@@ -45,6 +46,9 @@ abstract class View(protected val application: Application) {
     }
 
     open fun onException(t: Throwable) {
+        if (AppConfig.DEBUG) {
+            t.printStackTrace()
+        }
         stopLoading()
         application.onException(t)
     }
