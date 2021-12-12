@@ -42,8 +42,6 @@ abstract class TransactionView(application: Application) : WalletView(applicatio
             .catch(::onException)
     }
 
-
-
     protected fun sendTransaction(
         transaction: RawTransaction,
         password: String,
