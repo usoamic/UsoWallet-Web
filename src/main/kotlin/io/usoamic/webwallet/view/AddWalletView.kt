@@ -19,7 +19,7 @@ import js.externals.jquery.jQuery
 import js.externals.toastr.extensions.error
 import js.externals.toastr.toastr
 import org.w3c.dom.HTMLElement
-import kotlin.browser.localStorage
+import kotlinx.browser.localStorage
 
 class AddWalletView(application: Application) : View(application) {
     override val view = jQuery("#add_wallet_view")

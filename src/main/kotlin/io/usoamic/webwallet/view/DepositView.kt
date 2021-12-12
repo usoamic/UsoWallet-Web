@@ -8,7 +8,7 @@ import js.externals.qrcode.QRCode
 import js.externals.qrcode.QRCodeOptions
 import org.w3c.dom.HTMLCanvasElement
 import org.w3c.dom.HTMLElement
-import kotlin.browser.document
+import kotlinx.browser.document
 
 class DepositView(application: Application) : WalletView(application) {
     override val view = jQuery("#deposit_view")

@@ -5,16 +5,26 @@ import io.usoamic.usoamicktjs.core.extension.getTransactionsByAddress
 import io.usoamic.usoamicktjs.model.Transfer
 import io.usoamic.usoamicktjs.other.Contract
 import io.usoamic.usoamicktjs.other.Node
+import io.usoamic.web3kt.bignumber.BigNumber
 import io.usoamic.web3kt.bignumber.extension.toBigNumber
+import io.usoamic.web3kt.buffer.Buffer
+import io.usoamic.web3kt.buffer.extension.fromHex
+import io.usoamic.web3kt.buffer.extension.toHex
 import io.usoamic.web3kt.core.Web3
 import io.usoamic.web3kt.core.contract.model.CallOption
 import io.usoamic.web3kt.core.contract.util.Coin
 import io.usoamic.web3kt.core.extension.newContract
+import io.usoamic.web3kt.tx.Tx
 import io.usoamic.web3kt.tx.block.DefaultBlockParameterName
+import io.usoamic.web3kt.tx.gas.DefaultGasProvider
+import io.usoamic.web3kt.tx.model.RawTransaction
+import io.usoamic.web3kt.tx.model.TransactionReceipt
 import io.usoamic.web3kt.util.EthUnit
 import io.usoamic.web3kt.util.extension.addHexPrefixIfNotExist
+import io.usoamic.web3kt.util.extension.removeHexPrefixIfExist
+import io.usoamic.web3kt.wallet.Wallet
 import io.usoamic.webwallet.AppConfig
-import io.usoamic.webwallet.enumcls.Page
+import io.usoamic.webwallet.enumcls.TransactionExecutionStatus
 import io.usoamic.webwallet.enumcls.TransferType
 import io.usoamic.webwallet.exception.WalletNotFoundException
 import io.usoamic.webwallet.model.Account
@@ -22,13 +32,14 @@ import io.usoamic.webwallet.other.Timestamp
 import io.usoamic.webwallet.util.TxUtils
 import js.externals.jquery.extension.onClick
 import js.externals.jquery.jQuery
-import kotlin.browser.localStorage
-import kotlin.browser.window
+import kotlinx.browser.localStorage
+import kotlinx.browser.window
 import io.usoamic.usoamicktjs.model.Account as AccountData
 
 abstract class WalletView(application: Application) : View(application) {
     protected val web3 = Web3(Node.by(AppConfig.NETWORK, AppConfig.NODE_PROVIDER))
-    private val contract = web3.newContract<Usoamic>(AppConfig.ABI, Contract.forNetwork(AppConfig.NETWORK))
+
+    private val contract = web3.newContract<Usoamic>(AppConfig.ABI, CONTRACT_ADDRESS)
     protected val methods = contract.methods
 
     private val logoutBtn = jQuery("#logout")
@@ -43,6 +54,7 @@ abstract class WalletView(application: Application) : View(application) {
     protected val callOption = CallOption(address)
 
     init {
+
         application.showNavigationBar()
         setListeners()
     }
@@ -103,5 +115,9 @@ abstract class WalletView(application: Application) : View(application) {
                 callback(txList, lastTxId)
             }
         }
+    }
+
+    companion object {
+        val CONTRACT_ADDRESS = Contract.forNetwork(AppConfig.NETWORK)
     }
 }

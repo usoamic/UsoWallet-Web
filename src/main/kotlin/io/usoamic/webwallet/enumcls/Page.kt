@@ -7,6 +7,7 @@ enum class Page {
     DASHBOARD,
     DEPOSIT,
     WITHDRAW,
+    EXCHANGE,
     HISTORY;
 
     fun isAuthPage(): Boolean {
@@ -14,6 +15,6 @@ enum class Page {
     }
 
     fun isLoginPage(): Boolean {
-        return (listOf<Page>(DASHBOARD, DEPOSIT, WITHDRAW, HISTORY).contains(this))
+        return (listOf<Page>(DASHBOARD, DEPOSIT, WITHDRAW, EXCHANGE, HISTORY).contains(this))
     }
 }

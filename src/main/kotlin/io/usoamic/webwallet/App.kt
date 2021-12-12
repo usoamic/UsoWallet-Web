@@ -12,8 +12,8 @@ import js.externals.jquery.extension.setActive
 import js.externals.jquery.jQuery
 import js.externals.toastr.toastr
 import org.w3c.dom.HTMLElement
-import kotlin.browser.localStorage
-import kotlin.browser.window
+import kotlinx.browser.localStorage
+import kotlinx.browser.window
 
 class App : Application {
     private val baseElement: JQuery<HTMLElement> = jQuery("#html")
@@ -92,6 +92,7 @@ class App : Application {
             is DashboardView -> "Dashboard"
             is DepositView -> "Deposit"
             is WithdrawView -> "Withdraw"
+            is ExchangeView -> "Exchange"
             is HistoryView -> "History"
             else -> ""
         }
@@ -132,6 +133,9 @@ class App : Application {
             }
             Page.WITHDRAW -> {
                 WithdrawView.open(this)
+            }
+            Page.EXCHANGE -> {
+                ExchangeView.open(this)
             }
             Page.HISTORY -> {
                 HistoryView.open(this)
