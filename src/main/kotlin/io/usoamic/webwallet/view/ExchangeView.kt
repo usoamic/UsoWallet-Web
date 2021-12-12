@@ -122,6 +122,8 @@ class ExchangeView(application: Application) : TransactionView(application) {
         data: ExchangeTxData,
         gasPrice: BigNumber
     ) {
+        changeLoadingText(TransactionExecutionStatus.SIGNING)
+
         val response = methods.burnSwap(Coin.fromCoin(data.amount).toStringSat())
 
         response.estimateGas(
