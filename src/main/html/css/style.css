@@ -191,6 +191,10 @@ html.login_page body nav {
     height: 365px
 }
 
+.height_exchange {
+    height: 365px
+}
+
 @media only screen and (min-width: 768px) and (max-width: 992px) {
     .fs-md-reduce, .fs-md-reduce-1 {
         font-size: 0.9em;
