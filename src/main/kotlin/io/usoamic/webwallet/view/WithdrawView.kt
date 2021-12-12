@@ -1,25 +1,13 @@
 package io.usoamic.webwallet.view
 
-import io.usoamic.usoamicktjs.other.Contract
 import io.usoamic.web3kt.bignumber.BigNumber
-import io.usoamic.web3kt.bignumber.BigNumberValue
 import io.usoamic.web3kt.bignumber.extension.toBigNumber
-import io.usoamic.web3kt.buffer.Buffer
-import io.usoamic.web3kt.buffer.extension.fromHex
-import io.usoamic.web3kt.buffer.extension.toHex
 import io.usoamic.web3kt.core.contract.model.EstimateGasOption
 import io.usoamic.web3kt.core.contract.util.Coin
-import io.usoamic.web3kt.tx.Tx
-import io.usoamic.web3kt.tx.block.DefaultBlockParameterName
-import io.usoamic.web3kt.tx.gas.DefaultGasProvider
 import io.usoamic.web3kt.tx.model.RawTransaction
 import io.usoamic.web3kt.util.EthUnit
-import io.usoamic.web3kt.util.extension.addHexPrefixIfNotExist
-import io.usoamic.web3kt.util.extension.removeHexPrefixIfExist
-import io.usoamic.web3kt.wallet.Wallet
-import io.usoamic.webwallet.AppConfig
 import io.usoamic.webwallet.base.Application
-import io.usoamic.webwallet.base.WalletView
+import io.usoamic.webwallet.base.TransactionView
 import io.usoamic.webwallet.enumcls.Asset
 import io.usoamic.webwallet.enumcls.TransactionExecutionStatus
 import io.usoamic.webwallet.exception.ValidateUtilException
@@ -31,7 +19,7 @@ import js.externals.jquery.extension.*
 import js.externals.jquery.jQuery
 import org.w3c.dom.HTMLElement
 
-class WithdrawView(application: Application) : WalletView(application) {
+class WithdrawView(application: Application) : TransactionView(application) {
     override val view = jQuery("#withdraw_view")
     override val navBarItem: JQuery<HTMLElement>? = jQuery("#withdraw_item")
 
@@ -110,25 +98,21 @@ class WithdrawView(application: Application) : WalletView(application) {
 
             startLoading(asset)
 
-            web3.eth.getTransactionCount(address, DefaultBlockParameterName.LATEST)
-                .then { nonce ->
-                    changeLoadingText(asset, TransactionExecutionStatus.GAS_PRICE)
-
-                    getGasPrice(sGasPrice) { gasPrice ->
-                        sendWith(
-                            data = WithdrawTxData(
-                                nonce = nonce,
-                                asset = asset,
-                                address = sAddress,
-                                amount = sAmount,
-                                password = sPassword
-                            ),
-                            gasPrice = gasPrice
-                        )
-                    }
+            getTransactionCount { nonce ->
+                changeLoadingText(asset, TransactionExecutionStatus.GAS_PRICE)
+                getGasPrice(sGasPrice) { gasPrice ->
+                    sendWith(
+                        data = WithdrawTxData(
+                            nonce = nonce,
+                            asset = asset,
+                            address = sAddress,
+                            amount = sAmount,
+                            password = sPassword
+                        ),
+                        gasPrice = gasPrice
+                    )
                 }
-                .catch(::onException)
-
+            }
         } catch (t: Throwable) {
             onException(t)
         }
@@ -157,10 +141,13 @@ class WithdrawView(application: Application) : WalletView(application) {
         gasPrice: BigNumber
     ) {
         val value = web3.utils.toWei(data.amount, EthUnit.ETHER).toBigNumber()
+
+        val to = data.address
+
         web3.eth.estimateGas(
-            EstimateGasOption(
+            EstimateGasOption.Ether(
                 from = address,
-                to = data.address,
+                to = to,
                 value = value
             )
         )
@@ -170,7 +157,7 @@ class WithdrawView(application: Application) : WalletView(application) {
                     nonce = data.nonce,
                     gasPrice = gasPrice,
                     gasLimit = gasLimit,
-                    to = data.address,
+                    to = to,
                     value = value
                 )
                 sendTransaction(Asset.COIN, transaction, data.password)
@@ -183,11 +170,11 @@ class WithdrawView(application: Application) : WalletView(application) {
         gasPrice: BigNumber
     ) {
         val response = methods.transfer(data.address, Coin.fromCoin(data.amount).toStringSat())
+
         response.estimateGas(
-            EstimateGasOption(
+            EstimateGasOption.Contract(
                 from = address,
-                to = data.address,
-                value = BigNumberValue.ZERO,
+                to = CONTRACT_ADDRESS,
                 data = response.encodeABI()
             )
         )
